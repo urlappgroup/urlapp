@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to QR Code Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #qrCode {
+            margin-top: 20px;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text to QR Code Converter</h1>
+    <input type="text" id="textInput" placeholder="Enter text here">
+    <div id="qrCode"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        document.getElementById("textInput").addEventListener("input", generateQRCode);
+
+        function generateQRCode() {
+            var text = document.getElementById("textInput").value;
+            var qrCodeContainer = document.getElementById("qrCode");
+            qrCodeContainer.innerHTML = ""; // Clear previous QR code
+            if (text) {
+                new QRCode(qrCodeContainer, {
+                    text: text,
+                    width: 256,
+                    height: 256,
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -8,32 +8,25 @@
         function filterData() {
 
 
-
-
-            // 获取输入框中的文本
+ 
             var inputText = document.getElementById('inputText').value;
-            //   var encoded = btoa(inputText);
 
             const encoder = new TextEncoder();
-            const data = encoder.encode(inputText); // 将字符串编码为二进制数据
-            const base64 = btoa(String.fromCharCode(...new Uint8Array(data))); // 将二进制数据转换为Base64编码
-            console.log(base64); // 输出 "5L2g5aW977yM5LiW55WM"
+            const data = encoder.encode(inputText);
+            const base64 = btoa(String.fromCharCode(...new Uint8Array(data)));
+            console.log(base64);
 
 
-            //     var encoded = btoa(inputText+"");
-            // console.log(encoded); // 输出 "aGVsbG8gd29ybGQ="
-            // var decoded = atob("aGVsbG8gd29ybGQ=");
-            // console.log(decoded); // 输出 "hello world"
 
 
             var url = "data:text/html;base64," + base64;
 
 
 
-            console.log("url length:"+url.length)
+            console.log("url length:" + url.length)
             document.getElementById('output').value = url;
 
-            document.getElementById('myLaben').innerText="url length:"+url.length;
+            document.getElementById('myLaben').innerText = "url length:" + url.length;
 
 
         }
@@ -47,9 +40,9 @@
 </head>
 
 <body>
-    <label  id="myLaben" ></label>
+    <label id="myLaben"></label>
     <br>
-     <textarea id="inputText" rows="10" style="width: 800px;height: 700px;" onchange="filterData()">输入base64</textarea>
+    <textarea id="inputText" rows="10" style="width: 800px;height: 700px;" onchange="filterData()">输入base64</textarea>
 
 
     <!-- <span>输出结果:</span> -->

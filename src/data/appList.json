@@ -68,5 +68,33 @@
         "updateTime": 1715235441515,
         "createTime": 1715235441515,
         "weight": 1
+    },
+    {
+        "title": "二维码生成",
+        "desc": "字符串转二维码，底层使用qrcodejs实现",
+        "tag": "编码解码",
+        "marks": "小工具",
+        "fileName": "qrCode.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/qrCode",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 1
+    },
+    {
+        "title": "二维码扫描",
+        "desc": "扫描二维码并打开",
+        "tag": "编码解码",
+        "marks": "小工具",
+        "fileName": "scanQRCode.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/scanQRCode",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 1
     }
 ]

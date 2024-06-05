@@ -1,5 +1,6 @@
 
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import allList from '@/data/appList.json';
 
@@ -13,7 +14,7 @@ function sortByOrderList(stringList, orderList) {
 
     // 定义比较函数
     const compareFn = (a, b) => {
-        let bigInt=10000000
+        let bigInt = 10000000
         const aIndex = indexMap.has(a) ? indexMap.get(a) : bigInt; // 不在orderList中的元素给一个很大的索引值
         const bIndex = indexMap.has(b) ? indexMap.get(b) : bigInt; // 同上
         return aIndex - bIndex; // 如果两者都在orderList中，则按照orderList的顺序排列=
@@ -23,10 +24,9 @@ function sortByOrderList(stringList, orderList) {
     return stringList.slice().sort(compareFn);
 }
 
-export default ({ curTag }) => {
+const TabBar = ({ curTag }) => {
     const navigate = useNavigate();
     const handleClick = (path) => {
-        // window.open(path, '_blank', 'noopener,noreferrer');
         navigate(path);
     };
     let newTags = [... new Set(allList.map(item => item.tag))]
@@ -47,7 +47,7 @@ export default ({ curTag }) => {
 
 
                 {
-                    sortedTags.map((tag, index) => (
+                    sortedTags.map((tag) => (
                         <li key={tag} className={tag == curTag ? 'active' : ''}
                             onClick={() => handleClick('/listPage?tag=' + tag)}
                         >
@@ -63,3 +63,9 @@ export default ({ curTag }) => {
 
     )
 }
+
+TabBar.propTypes = {
+    curTag: PropTypes.any.isRequired, // 这里可以根据实际需要调整验证规则
+};
+
+export default TabBar

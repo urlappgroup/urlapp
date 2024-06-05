@@ -5,8 +5,7 @@ import TabBar from './TabBar.jsx'
 import allList from '@/data/appList.json';
 import { useLocation } from 'react-router-dom';
 
-
-export default () => {
+const ListPageLayout = () => {
   let location = useLocation();
   let query = new URLSearchParams(location.search);
   let tag = query.get('tag'); // 获取"tag"参数的值
@@ -38,7 +37,7 @@ export default () => {
                 return item && item.tag == tag
 
               })
-              .map((item, index) => { 
+              .map((item) => { 
 
                 return <ListItem key={item.fileName} itemData={item} />
 
@@ -55,3 +54,6 @@ export default () => {
 
   )
 }
+
+export default ListPageLayout
+
