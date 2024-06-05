@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>记事本工具</title>
+</head>
+
+<body>
+
+  <input type="text" id="findText" style="width:500px" placeholder="查找" value="&">
+  <input type="text" id="replaceText" style="width:500px" placeholder="替换为" value="\n">
+  <button onclick="replaceText()">替换</button>
+
+  <textarea id="textArea" style="height:98vh;width:100%;"></textarea>
+
+  <script>
+    function replaceText() {
+      var textArea = document.getElementById("textArea");
+      var findText = document.getElementById("findText").value;
+      var replaceText = document.getElementById("replaceText").value;
+      var text = textArea.value;
+      var replaceText2 = replaceText.replace(new RegExp("\\\\n", "g"), "\n");
+      var newText = text.replace(new RegExp(findText, "g"), replaceText2);
+      textArea.value = newText;
+    }
+  </script>
+</body>
+
+</html>

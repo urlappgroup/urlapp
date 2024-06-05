@@ -1,0 +1,72 @@
+[
+    {
+        "title": "html文本编辑",
+        "desc": "一个极简文本编辑页面,适合临时文本编辑/查看场景.还能贴入图片",
+        "tag": "文本编辑",
+        "marks": "小编推荐",
+        "fileName": "textEditor.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/textEditor",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 100
+    },
+    {
+        "title": "文本编辑",
+        "desc": "纯文本编辑,支持替换,临时使用不会保存",
+        "tag": "文本编辑",
+        "marks": "推荐",
+        "fileName": "notebook.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/notebook",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 100
+    },
+    {
+        "title": "html转urlApp",
+        "desc": "左侧贴入html,右侧转换为dataUrl,dataUrl可以直接贴入浏览器地址栏使用",
+        "tag": "urlapp开发",
+        "marks": "必读",
+        "fileName": "makeDataUrl.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/makeDataUrl",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 100
+    },
+    {
+        "title": "[新人必读]urlapp和本站简介",
+        "desc": "urlApp是一种极端轻量的app形式,不依赖网络,点开即用,代码开源.\n本网站是一个urlApp发布/使用平台,欢迎您使用和投稿.",
+        "tag": "平台说明",
+        "marks": "新人必读",
+        "fileName": "urlAppWhitePaper.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/urlAppWhitePaper",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 1
+    },
+    {
+        "title": "[新人必读]用户操作说明",
+        "desc": "网站使用方法和注意实现",
+        "tag": "平台说明",
+        "marks": "新人必读",
+        "fileName": "userManual.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "appId": "meepo@meepo.com/userManual",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 1
+    }
+]
