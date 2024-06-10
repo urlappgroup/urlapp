@@ -1,92 +1,69 @@
 
 
-# 引言
- 
-
-您可以复制如下url到浏览器地址栏打开:  
-data:text/html;base64,PGh0bWwgY29udGVudGVkaXRhYmxlPmVkaXQgbWU8L2h0bWw+  
- 
-
-它是一个网页版记事本  
-和普通记事本应用的不同点在于:  
-它不需要网络,可以断网使用  
-它是开源的,您可以查看网页源代码或者保存网页到本地,随后任意查看和修改  
-它很轻便,只有一行代码,140个字节  
-它很快,因为没有任何网络开销  
-
-
-
-
 # 什么是urlapp
-urlapp是一种特别的app形式,它将全部app代码编码进url,打开url就能直接使用app  
- 
+urlapp是一种轻量开源app封装形式。  
+它使用Data URL规范（参考：[Data URL 规范](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)），封装一个单页面html应用为一个url，使用浏览器访问url可直接使用app。
 
-urlapp具有如下优点:  
+如下链接是一个简单的urlapp，复制到浏览器地址栏运行
 
-## 1不需要网络
-urlapp将app的全部源码放入url,url就已经是app的全部代码了,贴入浏览器地址栏即可使用  
-## 2轻便快捷
-浏览器有url长度限制,所以urlapp的体积通常都很轻巧  
-不依赖网络,也没有网络调用开销  
-## 3易于分发
-app的全部就是一个url,复制粘贴即可分发给别人,甚至能通过论坛留言或者私信发给别人  
-## 4彻底开源
-urlapp本质是一个html页面,天然开源,保存网页后即可查看和修改源码  
- 
+`data:text/html;base64,PGh0bWwgY29udGVudGVkaXRhYmxlPmVkaXQgbWU8L2h0bWw+`
 
-原理是使用data url,将html代码作为代码拼接在url中,整个app其实就是一个html文件  
-
- 
-
-进一步了解data url细节,可以参考:  
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs  
-
-
+这是一个网页记事本，它有很多一般app不具备的特性：
+* 无需网络，永久可用
+* 全平台支持，只依赖浏览器
+* 易于分发
+* 开源
+* 轻量秒开
+* 安全，浏览器对网页有严格限制
 
 # 关于本站
-本网站致力于提供一个urlapp的分发和使用平台  
-并提供urlapp开发相关的技术支持  
+
+urlapp项目（[github地址](https://github.com/urlappgroup/urlapp)）致力于提供一个使用，发布，推广，讨论，开发urlapp的平台。
+
+您可以在这里发现立即可用的urlapp，或者分享您编写的urlapp。
+
+平台还会致力于推广关于urlapp的技术，让更多的用户和开发者获得便利。
+
+## github
+github地址：https://github.com/urlappgroup/urlapp
+
+github的urlapp项目包含了urlapp项目全部代码和urlapp项目收集的urlapp数据。
+
+您可以使用issues板块讨论项目问题，使用Discussions板块讨论任何问题和发布urlapp
+
+## 在线服务地址
+[urlapp.org](https://urlapp.org)是项目的部署地址
+
+不过，为了提高服务可用性，后续会部署到包括ipfs等更多渠道。您也可以直接拉取项目源码自行部署。
+
+
+
+# 使用urlapp
+您可以点击【直接打开】按钮直接使用  
+也可以点击【复制url】按钮复制dataurl，然后贴到浏览器使用
+
+使用dataurl运行时会有很多限制（比如不能使用本地存储），因此一些涉及存储功能的app需要保存为本地html文件后使用
+
+更多说明见[网站使用说明](https://urlapp.org/appFile/urlAppWhitePaper.html)
+
+# 开发urlapp
+urlapp本身就是一个单页面html应用，因此使用html+css+js开发一个html文件作为app即可  
+具体说明见文档:[如何开发urlapp](https://urlapp.org/appFile/howToMakeUrlApp.html)
+
+
+# 发布urlapp到urlapp项目
+出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程，目前提供如下两个渠道发布新urlapp并收录入urlapp项目  
+具体说明见文档:[使用github discussions发布](https://urlapp.org/appFile/howToPublish.html)
+
+## 1使用邮件
+邮箱：urlappgroup@gmail.com
+您可以通过邮箱发布/更新urlapp，收到邮件后会进行人工审核，通过后会更新到urlapp项目中
+
+## 2使用github discussions
+[发布板块地址](https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp)
+使用github discussions通过发帖的方式发布
+
+
  
-
-本网站尝试探索去中心化的软件架构,以此来解决传统网站的一些问题:  
- 
-## 1保证网站资源永远可用
-传统网站可能因为墙,或者维护团队解散而不可用  
-本网站的数据和服务都会开源,并利用去中心相关技术保证服务永远可用  
-同时只要添加到收藏夹,urlapp本身也会永远保存在用户电脑本地  
- 
-
-一期计划使用ipfs 和 github pages 来实现上述目标  
-网站本身只是一个静态网站,您可以保存单个urlapp,或者在github下载整站代码本地部署,或者通过ipfs下载整站资源  
- 
-
-## 2去中心的后台服务
-传统app的后端服务也是中心化的,一样无法保证可用性  
- 
-
-通过p2p和区块链可能实现去中心的后端服务,但是这个方案要求用户安装相关软件,很难推广  
-现阶段通过email+自动构建服务来半自动实现后端数据写入(人工审核还是必须的,要控制内容质量)  
- 
-
-## 3去中心服务治理
-网站本身的功能迭代也是通过去中心的方式,通过网友共同开发维护的  
- 
-
-这方面需要依赖dao技术,并且需要社区有一定用户规模,如果这个项目能运营起来就会做  
-
-
-
-# 使用说明
-欢迎使用本站,本站所有app点击即用,更详细的说明可以查看文档  
-[新人必读](/appFile/userManual.html)
- 
-
-# 投稿说明
-欢迎在本站发布urlapp,具体流程请看文档  
-URLAPP开发说明  
-欢迎开发urlapp,具体流程请看文档  
-
-
-
 
 

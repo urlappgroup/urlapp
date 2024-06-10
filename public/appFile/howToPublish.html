@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8ff0;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="概述">概述</h1>
+<p>本文说明如何发布一个urlapp到本站</p>
+<p>出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程
+目前,我们通过以下2种渠道接收urlapp的发布和更新</p>
+<ul>
+<li>通过邮件 <a href="mailto:urlappgroup@gmail.com">urlappgroup@gmail.com</a></li>
+<li>通过github <a href="https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp">发布板块地址</a></li>
+</ul>
+<h1 id="提交发布请求">提交发布请求</h1>
+<p>两种方式提交的内容格式完全一样，只是提交的渠道不同</p>
+<h2 id="1使用邮件发布">1使用邮件发布</h2>
+<p>发送到邮箱urlappgroup@gmail.com
+提交后后续进展会回复邮件</p>
+<h2 id="使用github-discussions提交">使用github discussions提交</h2>
+<p><a href="https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp">发布板块地址</a></p>
+<p>点击【New discussion】，选择category为publish-urlapp，提交一个urlapp发布请求</p>
+<p>后续进展会通过回帖，修改状态方式反馈</p>
+<h1 id="发布请求格式">发布请求格式</h1>
+<h3 id="邮箱">邮箱</h3>
+<p><a href="mailto:urlappgroup@gmail.com">urlappgroup@gmail.com</a></p>
+<h3 id="标题格式">标题格式</h3>
+<p>[发布]appId-app名称</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>appId</td>
+<td>唯一确定一个app，由邮箱和app驼峰名称拼接得到</td>
+<td><a href="mailto:abc@163.com">abc@163.com</a>/demoApp</td>
+</tr>
+<tr>
+<td>app名称</td>
+<td>app的中文名字</td>
+<td>示例app</td>
+</tr>
+<tr>
+<td>邮件标题</td>
+<td>拼接好的邮件标题</td>
+<td>[发布]abc@163.com/demoApp-示例app</td>
+</tr>
+</tbody>
+</table>
+<h3 id="正文">正文</h3>
+<p>正文填写app相关信息，以json方式提供</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>app标题</td>
+<td>html文本编辑</td>
+</tr>
+<tr>
+<td>desc</td>
+<td>app说明，展示在标题下方，建议不要超过3行100字</td>
+<td>一个极简文本编辑页面,适合临时文本编辑/查看场景.还能贴入图片</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>分类标签，填写你认为合理的分类标签，但是urlapp平台会根据需要修改</td>
+<td>文本编辑</td>
+</tr>
+<tr>
+<td>fileName</td>
+<td>app的html文件名称</td>
+<td>textEditor.html</td>
+</tr>
+<tr>
+<td>userName</td>
+<td>用户昵称</td>
+<td>张三</td>
+</tr>
+<tr>
+<td>userEmail</td>
+<td>重要！这个邮箱用来确认app归属，只使用这个邮箱确认app归属人，可以不是发送邮件的邮箱</td>
+<td><a href="mailto:aaa@126.com">aaa@126.com</a></td>
+</tr>
+<tr>
+<td>version</td>
+<td>app版本号，“v1.0.0”格式</td>
+<td>v1.0.0</td>
+</tr>
+<tr>
+<td>license</td>
+<td>开源协议名称，建议使用MIT或者Apache-2.0</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>appId</td>
+<td>唯一确定app的id，由作者邮箱+驼峰app名称拼接</td>
+<td><a href="mailto:abc@163.com">abc@163.com</a>/textEditor</td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<pre><code>    {
+        &quot;title&quot;: &quot;html文本编辑&quot;,
+        &quot;desc&quot;: &quot;一个极简文本编辑页面,适合临时文本编辑/查看场景.还能贴入图片&quot;,
+        &quot;tag&quot;: &quot;文本编辑&quot;,
+        &quot;fileName&quot;: &quot;textEditor.html&quot;,
+        &quot;userName&quot;: &quot;meepo&quot;,
+        &quot;userEmail&quot;: &quot;meepo@meepo.com&quot;,
+        &quot;version&quot;: &quot;v1.0.0&quot;,
+        &quot;license&quot;: &quot;Apache-2.0&quot;,
+        &quot;appId&quot;: &quot;meepo@meepo.com/textEditor&quot;
+    }
+</code></pre>
+<h3 id="附件填写">附件填写</h3>
+<p>urlapp的html文件，只支持一个html文件</p>
+
+            
+            
+        </body>
+        </html>

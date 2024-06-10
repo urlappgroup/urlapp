@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>url网页制作</title>
+    <title>html转dataurl</title>
     <script>
         function filterData() {
 
 
- 
+
             var inputText = document.getElementById('inputText').value;
 
             const encoder = new TextEncoder();
@@ -42,11 +42,12 @@
 <body>
     <label id="myLaben"></label>
     <br>
-    <textarea id="inputText" rows="10" style="width: 800px;height: 700px;" onchange="filterData()">输入base64</textarea>
+    <textarea id="inputText" rows="10" style="width: 45vw;height: 90vh;" onchange="filterData()"
+        placeholder="输入html文件内容，编码后的dataurl输出在右边"></textarea>
 
 
     <!-- <span>输出结果:</span> -->
-    <textarea id="output" rows="10" style="width: 800px;height: 700px;">输出结果</textarea>
+    <textarea id="output" rows="10" style="width: 45vw;height: 90vh;">输出结果</textarea>
 </body>
 
 </html>

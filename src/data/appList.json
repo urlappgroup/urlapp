@@ -32,7 +32,7 @@
     {
         "title": "html转urlApp",
         "desc": "左侧贴入html,右侧转换为dataUrl,dataUrl可以直接贴入浏览器地址栏使用",
-        "tag": "urlapp开发",
+        "tag": "关于urlapp",
         "marks": "必读",
         "fileName": "makeDataUrl.html",
         "userName": "meepo",
@@ -45,9 +45,9 @@
         "weight": 100
     },
     {
-        "title": "[新人必读]urlapp和本站简介",
-        "desc": "urlApp是一种极端轻量的app形式,不依赖网络,点开即用,代码开源.\n本网站是一个urlApp发布/使用平台,欢迎您使用和投稿.",
-        "tag": "平台说明",
+        "title": "[新人必读]关于urlapp和urlapp.org",
+        "desc": "urlApp是一种极端轻量的app形式,不依赖网络,点开即用,代码开源.\n本网站是一个urlApp发布/使用平台,欢迎您使用和发布app.",
+        "tag": "关于urlapp",
         "marks": "新人必读",
         "fileName": "urlAppWhitePaper.html",
         "userName": "meepo",
@@ -60,19 +60,49 @@
         "weight": 1
     },
     {
-        "title": "[新人必读]用户操作说明",
-        "desc": "网站使用方法和注意实现",
-        "tag": "平台说明",
+        "title": "[新人必读]平台使用说明",
+        "desc": "网站使用方法和注意事项",
+        "tag": "关于urlapp",
         "marks": "新人必读",
-        "fileName": "userManual.html",
+        "fileName": "aboutUrlappOrg.html",
         "userName": "meepo",
         "userEmail": "meepo@meepo.com",
         "version": "v1.0.0",
         "license": "Apache-2.0",
-        "appId": "meepo@meepo.com/userManual",
+        "appId": "meepo@meepo.com/aboutUrlappOrg",
         "updateTime": 1715235441515,
         "createTime": 1715235441515,
-        "weight": 1
+        "weight": 100
+    },
+    {
+        "title": "[新人必读]如何发布urlapp",
+        "desc": "可以使用邮件和github discussions发布您的urlapp",
+        "tag": "关于urlapp",
+        "marks": "新人必读",
+        "fileName": "howToPublish.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "license": "Apache-2.0",
+        "appId": "meepo@meepo.com/howToPublish",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 100
+    },
+    {
+        "title": "[新人必读]如何制作urlapp",
+        "desc": "urlapp只是一个单页面html文件，本文说明开发方法和注意事项",
+        "tag": "关于urlapp",
+        "marks": "新人必读",
+        "fileName": "howToMakeUrlApp.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "license": "Apache-2.0",
+        "appId": "meepo@meepo.com/howToMakeUrlApp",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 100
     },
     {
         "title": "二维码生成",
@@ -91,7 +121,7 @@
     },
     {
         "title": "二维码扫描",
-        "desc": "扫描二维码并打开",
+        "desc": "扫描二维码并打开（只支持移动端）",
         "tag": "编码解码",
         "marks": "小工具",
         "fileName": "scanQRCode.html",

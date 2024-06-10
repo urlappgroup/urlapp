@@ -1,17 +1,19 @@
- 
+
+
+
 
 # 基本操作
-顶部标签: 点击可分类过滤可用urlapp  
+* 顶部标签-点击可分类过滤可用urlapp  
 
-urlapp卡片: 点击卡片直接打开urlapp  
+* urlap标题-点击标题直接打开urlapp  
 
-复制url: 点击复制url到剪贴板,粘贴到浏览器地址看即可打开使用  
+* 复制url-点击复制url到剪贴板,粘贴到浏览器地址看即可打开使用  
 
-直接打开: 点击后直接打开urlapp,和点击urlapp卡片效果一样  
+* 直接打开-点击后直接打开urlapp,和点击urlapp卡片效果一样  
 
-下载: 下载urlapp的源代码,是一个html文件,可以保存后使用  
+* 下载-载urlapp的源代码,是一个html文件,可以保存后使用  
 
-![main](imgs/userManual-main.jpg)
+![main](imgs/webPageUse.png)
 
  
 
