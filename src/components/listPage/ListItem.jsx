@@ -75,10 +75,10 @@ const ListItem = ({ itemData }) => {
 
       <p className="ua-post-summary" title={itemData.desc} onClick={() => openHtml()} >{itemData.desc}</p>
 
-      <div className="ua-post-metadata">
+      <div className="ua-post-metadata" title={"appId:"+itemData.appId}>
         {itemData.userName}
         &nbsp;· {formatDateTime(itemData.updateTime)}
-        &nbsp;· {itemData.tag} · {itemData.marks}
+        &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
         &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制url</a> · <a href="#" onClick={() => openHtml()} >直接打开</a>
         &nbsp;· <a href={downUrl} download={itemData.title}>下载</a>
       </div>
