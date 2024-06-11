@@ -7,12 +7,28 @@
   padding: 10px 20px;
   /* border-bottom: 1px solid #dde1e8; */
 }
+#searchInput {
+  padding: 8px 12px; /* 内边距 */
+  border: 1px solid #ccc; /* 边框 */
+  border-radius: 4px; /* 圆角 */
+  font-size: 16px; /* 字体大小 */
+  width: 300px; /* 宽度 */
+}
 
 .ua-logo {
   font-size: 1.5em;
   font-weight: 700;
   display: flex;
   align-items: center;
+  text-decoration: none;  
+  color: inherit; 
+}
+.ua-github {
+
+  display: flex;
+  align-items: center;
+  text-decoration: none; 
+  color: inherit; 
 }
 
 

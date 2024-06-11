@@ -1,18 +1,11 @@
 # 概述
 本文说明如何发布一个urlapp到本站  
 
-出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程
-目前,我们通过以下2种渠道接收urlapp的发布和更新
-- 通过邮件 urlappgroup@gmail.com
+出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程  
+目前,我们通过以下渠道接收urlapp的发布和更新
 - 通过github [发布板块地址](https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp)
 
-# 提交发布请求
-两种方式提交的内容格式完全一样，只是提交的渠道不同
-## 1使用邮件发布
-发送到邮箱urlappgroup@gmail.com
-提交后后续进展会回复邮件
-
-## 使用github discussions提交
+# 使用github discussions提交
 [发布板块地址](https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp)
 
 点击【New discussion】，选择category为publish-urlapp，提交一个urlapp发布请求
@@ -21,8 +14,7 @@
 
 
 # 发布请求格式
-### 邮箱
-urlappgroup@gmail.com
+
 ### 标题格式
 [发布]appId-app名称
 
@@ -62,5 +54,6 @@ urlappgroup@gmail.com
     }
 ``` 
 ### 附件填写
-urlapp的html文件，只支持一个html文件
+urlapp的html文件，只支持一个html文件  
+！！文件需要压缩zip，否则github不让上传
  

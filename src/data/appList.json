@@ -2,8 +2,8 @@
     {
         "title": "html文本编辑",
         "desc": "一个极简文本编辑页面,适合临时文本编辑/查看场景.还能贴入图片",
-        "tag": "文本编辑",
-        "marks": "小编推荐",
+        "tag": "编辑器",
+        "marks": "编辑器",
         "fileName": "textEditor.html",
         "userName": "meepo",
         "userEmail": "meepo@meepo.com",
@@ -17,7 +17,7 @@
     {
         "title": "文本编辑",
         "desc": "纯文本编辑,支持替换,临时使用不会保存",
-        "tag": "文本编辑",
+        "tag": "编辑器",
         "marks": "推荐",
         "fileName": "notebook.html",
         "userName": "meepo",
@@ -45,10 +45,10 @@
         "weight": 100
     },
     {
-        "title": "[新人必读]关于urlapp和urlapp.org",
+        "title": "[必读文档]关于urlapp和urlapp.org",
         "desc": "urlApp是一种极端轻量的app形式,不依赖网络,点开即用,代码开源.\n本网站是一个urlApp发布/使用平台,欢迎您使用和发布app.",
         "tag": "关于urlapp",
-        "marks": "新人必读",
+        "marks": "必读文档",
         "fileName": "urlAppWhitePaper.html",
         "userName": "meepo",
         "userEmail": "meepo@meepo.com",
@@ -60,10 +60,10 @@
         "weight": 1
     },
     {
-        "title": "[新人必读]平台使用说明",
+        "title": "[必读文档]平台使用说明",
         "desc": "网站使用方法和注意事项",
         "tag": "关于urlapp",
-        "marks": "新人必读",
+        "marks": "必读文档",
         "fileName": "aboutUrlappOrg.html",
         "userName": "meepo",
         "userEmail": "meepo@meepo.com",
@@ -75,10 +75,10 @@
         "weight": 100
     },
     {
-        "title": "[新人必读]如何发布urlapp",
+        "title": "[必读文档]如何发布urlapp",
         "desc": "可以使用邮件和github discussions发布您的urlapp",
         "tag": "关于urlapp",
-        "marks": "新人必读",
+        "marks": "必读文档",
         "fileName": "howToPublish.html",
         "userName": "meepo",
         "userEmail": "meepo@meepo.com",
@@ -90,10 +90,10 @@
         "weight": 100
     },
     {
-        "title": "[新人必读]如何制作urlapp",
+        "title": "[必读文档]如何制作urlapp",
         "desc": "urlapp只是一个单页面html文件，本文说明开发方法和注意事项",
         "tag": "关于urlapp",
-        "marks": "新人必读",
+        "marks": "必读文档",
         "fileName": "howToMakeUrlApp.html",
         "userName": "meepo",
         "userEmail": "meepo@meepo.com",
@@ -115,6 +115,7 @@
         "version": "v1.0.0",
         "license": "Apache-2.0",
         "appId": "meepo@meepo.com/qrCode",
+        "discussUrl":"https://github.com/urlappgroup/urlapp/discussions/3",
         "updateTime": 1715235441515,
         "createTime": 1715235441515,
         "weight": 1
@@ -130,6 +131,36 @@
         "version": "v1.0.0",
         "license": "Apache-2.0",
         "appId": "meepo@meepo.com/scanQRCode",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 1
+    },
+    {
+        "title": "2048小游戏",
+        "desc": "之前很火的小游戏移植版\n移植自https://github.com/gabrielecirulli/2048",
+        "tag": "游戏",
+        "marks": "游戏",
+        "fileName": "2048game.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "license": "Apache-2.0",
+        "appId": "meepo@meepo.com/2048game",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 1
+    },
+    {
+        "title": "动态表单编辑json",
+        "desc": "根据配置生成表单，填写表单生成json。\n用来生成json配置的编辑器",
+        "tag": "编辑器",
+        "marks": "小工具",
+        "fileName": "autoForm.html",
+        "userName": "meepo",
+        "userEmail": "meepo@meepo.com",
+        "version": "v1.0.0",
+        "license": "Apache-2.0",
+        "appId": "meepo@meepo.com/autoForm",
         "updateTime": 1715235441515,
         "createTime": 1715235441515,
         "weight": 1

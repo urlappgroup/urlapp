@@ -8,7 +8,9 @@ import { useLocation } from 'react-router-dom';
 const ListPageLayout = () => {
   let location = useLocation();
   let query = new URLSearchParams(location.search);
-  let tag = query.get('tag'); // 获取"tag"参数的值
+  let tag = query.get('tag');
+  let appId = query.get('appId');
+  let searchKey = query.get('searchKey');
 
   allList.sort((a, b) => {
     if (a.weight == b.weight) {
@@ -18,6 +20,13 @@ const ListPageLayout = () => {
     }
   });
 
+  function checkMatch(searchKey, item) {
+
+    if (item.title.includes(searchKey) || item.desc.includes(searchKey)) {
+      return true;
+    }
+    return false;
+  }
   return (
     <>
       <TabBar curTag={tag} />
@@ -30,6 +39,12 @@ const ListPageLayout = () => {
           {
             allList
               .filter(item => {
+                if (appId) { //有id就只用id
+                  return item.appId == appId;
+                }
+                if (searchKey) {
+                  return checkMatch(searchKey, item);
+                }
                 if (!tag || tag == 'all') {
                   return true;
                 }
@@ -37,7 +52,7 @@ const ListPageLayout = () => {
                 return item && item.tag == tag
 
               })
-              .map((item) => { 
+              .map((item) => {
 
                 return <ListItem key={item.fileName} itemData={item} />
 

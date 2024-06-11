@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态表单生成工具</title>
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .left, .right {
+            width: 50%;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        textarea, select, input {
+            display: block;
+            width: 100%;
+            /* margin-bottom: 10px; */
+            padding: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            /* margin-top: 5px; */
+        }
+        .form-group {
+            /* margin-bottom: 20px; */
+        }
+        label {
+            font-weight: bold;
+        }
+        .description {
+            font-size: 12px;
+            color: #666;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        button {
+            /* padding: 10px 20px; */
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            /* margin-bottom: 20px; */
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <!-- <h2>表单配置</h2> -->
+            <!-- <H3>表单配置</H3> -->
+
+            <textarea id="formConfig" rows="10" >
+[
+    {"type": "input", "label": "名称", "name": "name", "inputType": "text", "desc": "请输入您的名称"},
+    {"type": "input", "label": "年龄", "name": "age", "inputType": "number", "desc": "请输入您的年龄"},
+    {"type": "textarea", "label": "描述", "name": "description", "desc": "请输入您的个人描述"},
+    {"type": "select", "label": "性别", "name": "gender", "multiple": false, "options": ["男", "女"], "desc": "请选择您的性别"},
+    {"type": "select", "label": "爱好", "name": "hobbies", "multiple": true, "options": ["读书", "旅游", "摄影"], "allowInput": true, "desc": "请选择您的爱好（可多选）"}
+]
+            </textarea>
+            <button onclick="generateForm()">点击生成表单</button>
+
+            <!-- <H3>动态表单</H3> -->
+
+            <!-- <h2>动态表单</h2> -->
+            <form id="dynamicForm"></form>
+        </div>
+        <div class="right">
+            <h2>表单输出的JSON</h2>
+            <textarea id="jsonOutput" rows="40"   >
+                先点击生成表单,然后编辑表单,表单数据会输出在这里
+            </textarea>
+            <!-- <pre id="jsonOutput"></pre> -->
+        </div>
+    </div>
+
+    <script>
+    function generateForm() {
+        const formConfigStr = document.getElementById('formConfig').value;
+        let formConfig;
+        try {
+            formConfig = JSON.parse(formConfigStr);
+        } catch (e) {
+            alert('请输入有效的JSON配置');
+            return;
+        }
+
+        const form = document.getElementById('dynamicForm');
+        form.innerHTML = ''; // 清空旧的表单
+
+        formConfig.forEach(field => {
+            const div = document.createElement('div');
+            div.className = 'form-group';
+            
+            const label = document.createElement('label');
+            label.innerText = field.label;
+            div.appendChild(label);
+
+            if (field.desc) {
+                const desc = document.createElement('p');
+                desc.className = 'description';
+                desc.innerText = field.desc;
+                div.appendChild(desc);
+            }
+
+            if (field.type === 'input') {
+                const input = document.createElement('input');
+                input.name = field.name;
+                input.type = field.inputType || 'text';
+                input.oninput = updateJSONOutput;
+                div.appendChild(input);
+
+            } else if (field.type === 'textarea') {
+                const textarea = document.createElement('textarea');
+                textarea.name = field.name;
+                textarea.oninput = updateJSONOutput;
+                div.appendChild(textarea);
+
+            } else if (field.type === 'select') {
+                if (field.allowInput) {
+                    const addOptionInput = document.createElement('input');
+                    addOptionInput.type = 'text';
+                    addOptionInput.placeholder = '添加新选项，按回车确认';
+                    addOptionInput.onkeypress = e => {
+                        if (e.key === 'Enter') {
+                            if (e.target.value.trim() === '') return;
+                            const newOption = document.createElement('option');
+                            newOption.value = e.target.value;
+                            newOption.text = e.target.value;
+                            select.add(newOption);
+                            e.target.value = '';
+                            updateJSONOutput();
+                        }
+                    };
+                    div.appendChild(addOptionInput);
+                }
+
+                const select = document.createElement('select');
+                select.name = field.name;
+                select.multiple = field.multiple || false;
+                select.onchange = updateJSONOutput;
+
+                field.options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.text = option;
+                    select.appendChild(optionElement);
+                });
+
+                div.appendChild(select);
+            }
+
+            form.appendChild(div);
+        });
+
+        updateJSONOutput(); // 初次生成表单时更新JSON输出
+    }
+
+    function updateJSONOutput() {
+        const form = document.getElementById('dynamicForm');
+        const formDataObj = {};
+        
+        new FormData(form).forEach((value, key) => {
+            const inputElement = form.elements[key];
+
+            if (inputElement.multiple) {
+                formDataObj[key] = [...inputElement.selectedOptions].map(option => option.value);
+            } else {
+                formDataObj[key] = value;
+            }
+        });
+
+        // Ensure single selected values in multiple-select are arrays
+        for (const key in formDataObj) {
+            if (Array.isArray(formDataObj[key]) && formDataObj[key].length === 1) {
+                formDataObj[key] = formDataObj[key];
+            }
+        }
+
+        document.getElementById('jsonOutput').value = JSON.stringify(formDataObj, null, 2);
+    }
+    
+    </script>
+</body>
+</html>

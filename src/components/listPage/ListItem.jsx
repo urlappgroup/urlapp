@@ -24,11 +24,9 @@ const ListItem = ({ itemData }) => {
 
 
   const openHtml = async () => {
-
-
     window.open('/appFile/' + itemData.fileName, '_blank');
   };
-
+ 
   function uint8ArrayToBase64(byteArray) {
     let binaryString = "";
     for (let i = 0; i < byteArray.byteLength; i += 1024) {
@@ -81,6 +79,8 @@ const ListItem = ({ itemData }) => {
         &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
         &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制url</a> · <a href="#" onClick={() => openHtml()} >直接打开</a>
         &nbsp;· <a href={downUrl} download={itemData.title}>下载</a>
+        {itemData.discussUrl && " · "}{itemData.discussUrl && <a href={itemData.discussUrl}  >讨论和反馈</a>}
+        &nbsp;· <a href={"https://github.com/urlappgroup/urlapp/discussions/categories/report-violation"}  >举报</a>
       </div>
 
 
