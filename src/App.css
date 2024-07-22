@@ -67,6 +67,10 @@
 .ua-content-list {
   flex: 3;
 }
+.ua-content-detail {
+  width: 100%;
+}
+
 
 .ua-post-item {
   border-top: 1px solid #e2e5ec;

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="favicon" rel="shortcut icon" href="" type="image/x-icon">
+
+    <title>番茄钟工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #title,
+        #timer {
+            font-size: 48px;
+            margin: 20px 0px;
+            background: none;
+            border: none;
+            width: 100vw;
+            text-align: center;
+        }
+
+        #controls button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .session-list {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .pagination {
+            margin-top: 10px;
+        }
+
+        .pagination button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let timerInterval;
+        let remainingTime = 25 * 60;
+        let startTime = new Date().getTime();
+        let endTime = startTime + remainingTime * 1000;
+        let isPaused = true;
+        let sessionTitle = "无标题";
+
+        function formatTime(seconds) {
+            if(seconds==0 || remainingTime<0){
+                return "00:00"
+            }
+            let mins = Math.floor(seconds / 60);
+            let secs = seconds % 60;
+            return mins.toString().padStart(2, "0") + ":" + secs.toString().padStart(2, "0");
+        }
+
+        function setFaviconSvg(svg) {
+            const dataUrl = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+            let favicon = document.querySelector('#favicon') || document.createElement('link');
+            favicon.type = 'image/svg+xml';
+            favicon.rel = 'icon';
+            favicon.href = dataUrl;
+            document.head.appendChild(favicon);
+        }
+
+        const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" version="1.1"><circle cx="50" cy="50" r="50"  fill="green"/></svg>`;
+        let lastShow = 1;
+
+        setFaviconSvg(svgIcon);
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            remainingTime = Math.floor((endTime - now) / 1000);
+
+            if (remainingTime <= 0 && endTime > 0) {
+                remainingTime = 0;
+                endTime=0
+                endTimer();
+                alert("计时结束！");
+            }
+
+            console.log(remainingTime)
+            document.getElementById("timer").value = formatTime(remainingTime);
+            document.title = formatTime(remainingTime);
+            if (lastShow == 0) {
+                lastShow = 1;
+                setFaviconSvg(svgIcon);
+            } else {
+                lastShow = 0;
+                setFaviconSvg("");
+            }
+        }
+
+        function toggleTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                isPaused = true;
+                document.getElementById("toggleButton").textContent = "开始";
+            } else {
+                // if (isPaused) {
+                    isPaused = false;
+                    const now = new Date().getTime();
+                    endTime = now + remainingTime * 1000;
+                    timerInterval = setInterval(updateTimer, 1000);
+                    document.getElementById("toggleButton").textContent = "暂停";
+                // }
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            isPaused = true;
+            remainingTime = 25 * 60;
+            startTime = new Date().getTime();
+            endTime = startTime + remainingTime * 1000;
+            updateTimer();
+            document.getElementById("toggleButton").textContent = "开始";
+        }
+
+        function endTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            remainingTime = 0;
+            updateTimer();
+            saveSession();
+            document.getElementById("toggleButton").textContent = "开始";
+        }
+
+        function saveSession() {
+            const now = new Date();
+            const elapsedTime = Math.floor((now.getTime() - startTime) / 1000);
+            const sessionRecord = {
+                title: sessionTitle || "无标题",
+                date: now.toISOString(),
+                duration: elapsedTime
+            };
+            let sessions = JSON.parse(localStorage.getItem("pomodoroSessions")) || [];
+            sessions.push(sessionRecord);
+            localStorage.setItem("pomodoroSessions", JSON.stringify(sessions));
+            renderSessions(currentPage);
+        }
+
+        function parseTime(str) {
+            const [mins, secs] = str.split(":").map(Number);
+            return (mins * 60) + secs;
+        }
+
+        function setTime() {
+            const newTime = document.getElementById("timer").value;
+            remainingTime = parseTime(newTime);
+            startTime = new Date().getTime();
+            endTime = startTime + remainingTime * 1000;
+            updateTimer();
+        }
+
+        function setTitle() {
+            sessionTitle = document.getElementById("title").value || "无标题";
+        }
+
+        const ITEMS_PER_PAGE = 6;
+        let currentPage = 1;
+        let totalPages = 0;
+
+        function renderSessions(page) {
+            let sessions = JSON.parse(localStorage.getItem("pomodoroSessions")) || [];
+            sessions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            totalPages = Math.ceil(sessions.length / ITEMS_PER_PAGE);
+            const startIndex = (page - 1) * ITEMS_PER_PAGE;
+            const endIndex = page * ITEMS_PER_PAGE;
+            const paginatedItems = sessions.slice(startIndex, endIndex);
+
+            const tableBody = document.getElementById('sessionList');
+            tableBody.innerHTML = '';
+            paginatedItems.forEach(session => {
+                const row = `<tr>
+                    <td>${session.title}</td>
+                    <td>${new Date(session.date).toLocaleString()}</td>
+                    <td>${Math.floor(session.duration / 60)} 分钟 ${(session.duration % 60)} 秒</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            const paginationControls = document.getElementById('pagination');
+            paginationControls.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const button = `<button onclick="changePage(${i})">${i}</button>`;
+                paginationControls.innerHTML += button;
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderSessions(page);
+        }
+
+        window.onload = function () {
+            updateTimer();
+            renderSessions(currentPage);
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="title" value="无标题" readonly onclick="this.removeAttribute('readonly'); this.focus();"
+            onblur="this.setAttribute('readonly', true); setTitle();" />
+        <input type="text" id="timer" readonly onclick="this.removeAttribute('readonly'); this.focus();"
+            onblur="this.setAttribute('readonly', true); setTime();" />
+        <div id="controls">
+            <button id="toggleButton" onclick="toggleTimer()">开始</button>
+            <button onclick="resetTimer()">重置</button>
+            <button onclick="endTimer()">提前结束</button>
+        </div>
+
+        <div class="session-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>任务标题</th>
+                        <th>完成时间</th>
+                        <th>持续时间</th>
+                    </tr>
+                </thead>
+                <tbody id="sessionList"></tbody>
+            </table>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+</body>
+
+</html>

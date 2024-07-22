@@ -1,0 +1,119 @@
+
+<!doctype html>
+<html>
+  <!--
+  (c) &copy; js1k.com, 2010 - 2019
+  Note: submissions belong to their respective owner, do not copy without their consent
+  -->
+  <head>
+    <title>JS1k 2018 - Demo 3194 - "CALC-1K"</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content=" connect-src 'none' ; default-src 'none' ; font-src 'self' ; frame-src 'self' data: ; worker-src 'self' data: ; img-src 'self' data: ssl.google-analytics.com ; media-src data: ; object-src data: ; style-src 'self' data: 'unsafe-inline' ; script-src 'unsafe-inline' 'unsafe-eval' www.google-analytics.com ; " help="please report csp-related problems to valid demos!" > 
+    <meta name="author" content="Andrés Moreno">
+    <meta name="description" content="JS1k 2018 demo: &quot;CALC-1K&quot; -- An elegant pocket calculator with responsive design.">
+    <meta name="pubdate" content="20180228">
+    <link rel="icon" type="image/png" href="https://js1k.com/favicon.png">
+    <link rel="canonical" href="https://js1k.com/2018-coins/demo/3194">
+    <link rel="alternate" type="application/rss+xml" title="New demo feed" href="https://js1k.com/feed.xml">
+    <link rel="shortlink" href="https://js1k.com/3194">
+    <script>
+      setTimeout(function(){
+        var ga = document.createElement('script');
+        ga.async = true;
+        ga.defer = true;
+        ga.src = 'https://www.google-analytics.com/ga.js';
+        ga.onload = function(){try{_gat._getTracker('UA-19882353-1')._trackPageview();}catch(e){window.console&&console.log("ga fail :'( ");};};
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      }, 10);
+    </script>
+    <style>
+      /* https://qfox.nl/notes/333 */
+      body,html,iframe{margin:0;padding:0;border:0;width:100%;height:100%}iframe{position:absolute;top:0;left:0;
+      padding-top:50px;box-sizing:border-box} header{position:relative;z-index:1;height:47px;padding-top:2px;
+      border-bottom:1px solid #000;box-shadow:0 -10px 25px #ccc inset;background-color:#eee} aside,div,h1,p{overflow:
+      hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center;font-size:16px;font-weight:inherit;line-height:
+      22px;padding:0;margin:0;cursor:default} aside,h1{display:inline} a{color:#000;text-decoration:none;border-bottom:
+      1px dashed #000} a:hover{border-bottom:1px solid red} a[href="0"]{text-decoration:line-through;pointer-events:none
+      ;border-bottom:0;color:#ccc} .button{float:left;width:40px;height:40px;line-height:40px;text-align:center;padding:
+      0;margin:2px 0 0 10px;border:1px solid #888;border-color:#ddd #888 #888 #ddd;font-family:sans-serif;font-size:30px
+      ;font-weight:700;cursor:pointer} .button:hover{color:red;border-bottom-color:#888} .r{margin-right:10px}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>
+          <a href="https://js1k.com">JS1k</a>
+          <a href="https://js1k.com/2018-coins">2018</a>
+          <strong></strong> demo
+          &mdash;
+          "CALC-1K" by Andrés Moreno
+        </h1>
+        <p>
+          <em>
+            An elegant pocket calculator with responsive design.
+          </em>
+        </p>
+        <aside>
+          &mdash;
+          1021 bytes
+          &mdash;
+          <!-- -->
+          <a href="https://js1k.com/2018-coins/details/3194">demo details</a>
+          &mdash;
+          <a href="https://js1k.com/2018-coins/demos">list of demos</a>
+          <!-- 
+          <b><a href="https://js1k.com/2018-coins/demo/">
+            Update available here!
+          </a></b>
+          <!-- -->
+          &mdash;
+          <a href="https://js1k.com/3194" title="short link for your mobile devices" rel="nofollow">js1k.com/3194</a>
+        </aside>
+      </div>
+
+      <a href="3193" class="button p">&Larr;</a>
+      <a href="3195" class="button n">&Rarr;</a>
+    </header>
+
+    <script type="demo">
+C=_=>z=[t=x*y/100,x/y,x/y*100,,,x*y,t,,,x-y,x-t,,,x+y,x+t][o-16];F=k=>{k>12&k!=27?(k<17?(s-3?z/=100:C(y=z,++o),s=8):k-28?(s-3||C(y=z),x=z,s=1,o=k):(s&1?C(y=s&2?z:x):o&&C(x=z),s=8),V=z.toFixed(),N=V.length-(z<0),1/z&&N<=D?(v=N<D?z.toFixed(D-N).replace(/\.?0+$/,E):V,d=V!=v,v=+v?v:Z):(d=s=0,v="E")):(k<D|k==27?s&2?n-m<D&&(k>9?p=!d:v=(p?(p=0,d=1,v+P):d|+v?v:E)+k):([v,p]=k>9?[Z,1]:[k+E,0],d=0,s=2|s&1):k<11?(s=j-D?s-3?2:3:(o=0,2),d=p=0,v=Z="0"):k<12?s&2&&(v=v.slice(0,v.slice(-2)[0]==P?(d=0)-2:-1),v=!v|v!=+v|v=="-0"?Z:v,p=0):s&&v!=Z&&(v=m?v.slice(1):"-"+v),z=+v);j=k;m=v[0]=="-";l=v.length;n=l-d;O=E;for(i=n-11;i<l;)O+=(v[i++]||" ").big()+(v[i]==P|i==l&!d?i++&&P:" ").small();b.innerHTML=`<center><div> <pre>${O}</pre><p>${K}<style>div{width:14.5em;font:4vh/2.5 s;border:solid;user-select:none}pre{background:#bd9;padding:1em 0}a{width:23%;display:inline-block;cursor:pointer}a:hover{background:#fe9}`};F(j=D=10,K=E="",P=".",["C/AC","⌫","+/–",..."%789÷456×123−0.=+"].map((k,i)=>K+=`<a onclick=F(${k<D?k:i+D})>`+k))
+    </script>
+    <script>
+      (function(){var m=document,b=m.getElementsByTagName("header")[0],h=b.firstChild,n=m.getElementsByClassName("p")[0],f=m
+      .getElementsByClassName("n")[0];b.insertBefore(n,h);b.insertBefore(f,h);b.appendChild(m.getElementsByTagName("p")[0])}
+      )();(function reload(){function h(a){g.body.removeChild(k);d.parentElement.removeChild(d);t=c=d=k=null;reload(a)}var
+        B=T_CANVAS_SHIM=false,
+        N=T_WEBGL=false,
+        F=T_MAX_WIDTH=0,
+        P=T_MAX_HEIGHT=0,
+        U=T_LOCK_RATIO=false,
+        Q=T_CENTER_CANVAS=false,
+        V=T_RELOAD_ONORIENTATIONCHANGE=false,
+      g=document,t=g.getElementsByTagName("header")[0],k=g.createElement("iframe");g.body.appendChild(k);var a=k.contentWindow
+      ,c=k.contentDocument;c.open();c.close();c.write('<!doctype html><html style="margin: 0; padding: 0; border: 0;'+(B?" w"+
+      "idth: 100%; height: 100%;":"")+'"><head><meta charset="utf-8"><body style="margin: 0; padding: 0; border: 0;'+(B?" wi"+
+      "dth: 100%; height: 100%;":"")+'">'+(B?'<canvas style="display: block;'+(Q?" margin: auto;":"")+'"></canvas>':"")+"");if
+      (B){var e=c.getElementsByTagName("canvas")[0],q=e.style;c.body.clientWidth;var l=Math.max(Math.min(F||innerWidth,
+      innerWidth),1),r=Math.max(Math.min(P||innerHeight-50,innerHeight-50),1);(l<F||r<P)&&U&&(l<F?r=l/F*P:l=r/P*F);q.width=(e.
+      width=l)+"px";q.height=(e.height=r)+"px"}V&&(onorientationchange=h);a.AudioContext=a.AudioContext||a.webkitAudioContext;
+      a.requestAnimationFrame=a.requestAnimationFrame||a.mozRequestAnimationFrame||a.webkitRequestAnimationFrame||a.
+      msRequestAnimationFrame||function(b){a.setTimeout(b,1E3/30)};B&&(e.requestPointerLock=e.requestPointerLock||e.
+      mozRequestPointerLock||e.webkitRequestPointerLock);c.body.requestPointerLock=c.body.requestPointerLock||c.body.
+      mozRequestPointerLock||c.body.webkitRequestPointerLock;var nav=a.navigator;nav.getUserMedia=nav.getUserMedia||N.
+      webkitGetUserMedia||nav.mozGetUserMedia||nav.msGetUserMedia;a.OscillatorNode&&a.OscillatorNode.prototype&&(a
+      .OscillatorNode.prototype.start=a.OscillatorNode.prototype.start||a.OscillatorNode.prototype.noteOn,a.OscillatorNode.
+      prototype.stop=a.OscillatorNode.prototype.stop||a.OscillatorNode.prototype.noteOff);B&&(a.a=e);a.b=c.body;a.d=c;B&&(N||(
+      a.c=e.getContext("2d")),N&&(a.g=function(){a.onorientationchange=a.onresize=null;try{var b={antialias:!0,stencil:!0},d=e
+      .getContext("webgl",b)||e.getContext("experimental-webgl",b);a.__glExts="OES_texture_float OES_texture_float_linear OE"+
+      "S_standard_derivatives EXT_texture_filter_anisotropic MOZ_EXT_texture_filter_anisotropic WEBKIT_EXT_texture_filter_an"+
+      "isotropic WEBGL_compressed_texture_s3tc MOZ_WEBGL_compressed_texture_s3tc WEBKIT_WEBGL_compressed_texture_s3tc".split(
+      " ").map(function(a){return d.getExtension(a)})}catch(f){throw c.body.innerHTML="WebGL not supported.",a.a=a.b=a.c=a.d=
+      null,f;}return d}()));B=c.createElement("script");B.textContent=g.querySelector('script[type="demo"]').textContent;c.
+      body.appendChild(B);c.close();k.contentWindow.focus();B=g.getElementsByTagName("div")[0];window.reload=h;var d=g.
+      createElement("div");d.innerHTML="&#8635;";d.className="button r";d.title="restart just the demo (local, without remot"+
+      "e fetch)";d.onclick=h;t.insertBefore(d,B)})();
+    </script>
+  </body>
+</html>

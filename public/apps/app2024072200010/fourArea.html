@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四象限</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-template-rows: 50% 50%;
+            font-family: Arial, sans-serif;
+        }
+
+        .quadrant {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 10px;
+        }
+
+        .quadrant input[type='text'] {
+            border: none;
+            padding: 0px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: transparent;
+
+        }
+
+        .quadrant textarea {
+            flex-grow: 1;
+            margin-top: 10px;
+            padding: 15px;
+            border: none;
+            resize: none;
+            border-radius: 10px;
+
+        }
+
+        #quadrant1 {
+            background-color: #f8b3d0;
+        }
+
+        #quadrant2 {
+            background-color: #b3e5fc;
+        }
+
+        #quadrant3 {
+            background-color: #ffccbc;
+        }
+
+        #quadrant4 {
+            background-color: #d7c3fa;
+        }
+
+        .quadrant textarea {
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="quadrant1" class="quadrant">
+        <input type="text" value="重要紧急" key="input1" oninput="saveData(this)" />
+        <textarea oninput="saveData(this)" key="textarea1" placeholder="标题和窗口都可编辑,保存为html文件运行支持实时本地保存状态"></textarea>
+    </div>
+
+    <div id="quadrant2" class="quadrant">
+        <input type="text" value="重要不紧急" key="input2" oninput="saveData(this)" />
+        <textarea oninput="saveData(this)" key="textarea2">任务1
+任务2
+//任务3(已完成)</textarea>
+    </div>
+
+    <div id="quadrant3" class="quadrant">
+        <input type="text" value="不重要紧急" key="input3" oninput="saveData(this)" />
+        <textarea oninput="saveData(this)" key="textarea3"></textarea>
+    </div>
+
+    <div id="quadrant4" class="quadrant">
+        <input type="text" value="不重要不紧急" key="input4" oninput="saveData(this)" />
+        <textarea oninput="saveData(this)" key="textarea4"></textarea>
+    </div>
+
+    <script>
+        const textareas = document.querySelectorAll('textarea');
+        const inputs = document.querySelectorAll('input');
+        const ns = new URLSearchParams(window.location.search).get("ns")
+
+        window.onload = function () {
+
+            textareas.forEach((textarea, index) => {
+                let key = "4quadrant-" + ns + "-" + textarea.getAttribute("key")
+
+                const savedValue = localStorage.getItem(key);
+                if (savedValue) {
+                    textarea.value = savedValue;
+                }
+            });
+            inputs.forEach((input, index) => {
+                let key = "4quadrant-" + ns + "-" + input.getAttribute("key")
+
+                const savedValue = localStorage.getItem(key);
+                if (savedValue) {
+                    input.value = savedValue;
+                }
+            });
+        };
+        function saveData(element) {
+            let key = "4quadrant-" + ns + "-" + element.getAttribute("key")
+            localStorage.setItem(key, element.value);
+        }
+
+    </script>
+
+</body>
+
+</html>

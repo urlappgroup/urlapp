@@ -1,5 +1,6 @@
 
 import '@/App.css'
+import { useNavigate } from 'react-router-dom';
 
 
 function formatDateTime(timestamp) {
@@ -17,16 +18,44 @@ function formatDateTime(timestamp) {
   const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   return formattedDate;
 }
-const ListItem = ({ itemData }) => {
+const ListItem = ({ itemData,showType="list" }) => {
+
   if (!itemData) {
     itemData = {}
   }
-
-
-  const openHtml = async () => {
-    window.open('/appFile/' + itemData.fileName, '_blank');
+  const getAppHtmlPath =  (item) => {
+    return '/apps/' + item.appId + '/' + item.fileName;
   };
- 
+
+  const openAppHtml =  () => {
+    window.open(getAppHtmlPath(itemData), '_blank');
+  };
+  const onItemCardClick =  () => {
+    if(showType=="detail"){
+      openAppHtml()
+    }else{
+      openAppDetailPage()
+    }
+  };
+  let navigate = useNavigate();
+
+  const openAppDetailPage =  () => {
+    navigate('/detailPage?appId=' + itemData.appId);
+  };
+
+  const shareCurPage =  () => {
+   
+    const url = window.location.href;
+
+    navigator.clipboard.writeText(url).then(() => {
+      const promptMessage = `当前页面url已复制到剪贴板,也可以手动复制`;
+      prompt(promptMessage, url);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+
+  };
+
   function uint8ArrayToBase64(byteArray) {
     let binaryString = "";
     for (let i = 0; i < byteArray.byteLength; i += 1024) {
@@ -37,8 +66,8 @@ const ListItem = ({ itemData }) => {
   }
   async function copyDataUrlToClipboard() {
 
-    console.log('/appFile/' + itemData.fileName)
-    const response = await fetch('/appFile/' + itemData.fileName);
+    console.log(getAppHtmlPath(itemData))
+    const response = await fetch(getAppHtmlPath(itemData));
     const text = await response.text();
 
     const encoder = new TextEncoder();
@@ -64,21 +93,23 @@ const ListItem = ({ itemData }) => {
     });
   }
 
-  let downUrl = '/appFile/' + itemData.fileName;
+  let appUrl=getAppHtmlPath(itemData);
+  console.log(appUrl)
 
   return (
     <div className="ua-post-item"  >
 
-      <a className="ua-post-title" onClick={() => openHtml()} >{itemData.title}</a>
+      <a className="ua-post-title" onClick={() => onItemCardClick()} >{itemData.title}</a>
 
-      <p className="ua-post-summary" title={itemData.desc} onClick={() => openHtml()} >{itemData.desc}</p>
+      <p className="ua-post-summary" title={itemData.desc} onClick={() => onItemCardClick()} >{itemData.desc}</p>
 
-      <div className="ua-post-metadata" title={"appId:"+itemData.appId}>
+      <div className="ua-post-metadata" title={"appId:" + itemData.appId}>
         {itemData.userName}
         &nbsp;· {formatDateTime(itemData.updateTime)}
         &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
-        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制url</a> · <a href="#" onClick={() => openHtml()} >直接打开</a>
-        &nbsp;· <a href={downUrl} download={itemData.title}>下载</a>
+        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制url</a> · <a href="#" onClick={() => openAppHtml()} >直接打开</a>
+        &nbsp;· <a href={appUrl} download={itemData.title}>下载</a>
+        &nbsp;· <a href="#" onClick={() => shareCurPage()} >分享</a>
         {itemData.discussUrl && " · "}{itemData.discussUrl && <a href={itemData.discussUrl}  >讨论和反馈</a>}
         &nbsp;· <a href={"https://github.com/urlappgroup/urlapp/discussions/categories/report-violation"}  >举报</a>
       </div>

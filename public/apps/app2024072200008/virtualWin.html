@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: auto;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1e3d59;
+            background-image: linear-gradient(0deg, #939393 1%, transparent 1%),
+                linear-gradient(90deg, #939393 1%, transparent 1%);
+            background-size: 50px 50px;
+        }
+
+        #desktop {
+            position: absolute;
+            width: 1000%;
+            height: 1000%;
+            padding: 20px;
+        }
+
+        .shortcut,
+        .shortcut button {
+            width: 300px;
+            cursor: pointer;
+            background-color: #fff;
+            padding: 10px;
+            margin: 4px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .shortcut .delete-btn {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            background: rgb(79, 60, 60,0);
+            border: none;
+            cursor: pointer;
+            width: 20px;
+            height: 30px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .window {
+            position: absolute;
+            width: 50vw;
+            height: 50vh;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .window-titlebar {
+            background-color: #f0f0f0;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+            border-radius: 5px 5px 0 0;
+            cursor: move;
+        }
+
+        .title {
+            font-weight: bold;
+        }
+
+        .close-btn {
+            float: right;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .window-content {
+            height: calc(100% - 30px);
+            overflow: hidden;
+        }
+
+        .iframe-container {
+            height: calc(100% - 10px);
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .resize-handle {
+            opacity: 0;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            bottom: 0;
+            right: 0;
+            cursor: nwse-resize;
+            background-color: #777777;
+        }
+
+        .resize-handle:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="desktop">
+        <button class="shortcut" onclick='createBrowserWindow()'>点击创建浏览器窗口</button><br>
+        <button id="addShortcutBtn" class="shortcut">添加快捷方式</button>
+    </div>
+
+    <script>
+        let zIndex = 1;
+        const params = new URLSearchParams(window.location.search);
+        const namespace = params.get('namespace') || 'virtualWin';
+
+        function saveState() {
+            const windows = Array.from(document.getElementsByClassName('window')).map(win => ({
+                id: win.id,
+                left: win.style.left,
+                top: win.style.top,
+                width: win.style.width,
+                height: win.style.height,
+                url: win.querySelector('iframe').src
+            }));
+            localStorage.setItem(`${namespace}_windows`, JSON.stringify(windows));
+
+            const shortcuts = Array.from(document.getElementsByClassName('shortcut')).filter(sc => sc.dataset.url).map(sc => ({
+                title: sc.firstChild.textContent,
+                url: sc.dataset.url
+            }));
+            console.log("save-shortcuts=")
+            console.log(shortcuts)
+            localStorage.setItem(`${namespace}_shortcuts`, JSON.stringify(shortcuts));
+        }
+
+        function loadState() {
+            const windows = JSON.parse(localStorage.getItem(`${namespace}_windows`) || '[]');
+            const shortcuts = JSON.parse(localStorage.getItem(`${namespace}_shortcuts`) || '[]');
+
+            windows.forEach(win => {
+                createBrowserWindow(win.url, parseInt(win.width), parseInt(win.height), win.left, win.top, win.id);
+            });
+
+            console.log("load-shortcuts=")
+            console.log(shortcuts)
+
+            shortcuts.forEach(sc => {
+                createShortcut(sc.title, sc.url);
+            });
+        }
+
+        function createBrowserWindow(url, newWidth = 50 * window.innerWidth / 100, newHeight = 50 * window.innerHeight / 100, left = '100px', top = '100px', id = `window${zIndex}`) {
+            const windowId = id;
+            const iframeId = `iframe${zIndex}`;
+
+            const newWindow = document.createElement('div');
+            newWindow.id = windowId;
+            newWindow.className = 'window';
+            newWindow.style.left = left;
+            newWindow.style.top = top;
+            newWindow.style.width = newWidth + 'px';
+            newWindow.style.height = newHeight + 'px';
+            newWindow.style.zIndex = ++zIndex;
+
+            newWindow.innerHTML = `
+                <div class="window-titlebar" onmousedown="dragWindow('${windowId}', event)">
+                    <span class="title">浏览器窗口</span>
+                    <button class="close-btn" onclick="refreshWin('${iframeId}')">[刷新]</button>
+                    <button class="close-btn" onclick="closeWindow('${windowId}')">[关闭]</button>
+                </div>
+                <div class="window-content">
+                    <div class="iframe-container">
+                        <iframe id="${iframeId}" src="${url}"></iframe>
+                    </div>
+                </div>
+                <div class="resize-handle" onmousedown="startResize(event)"></div>
+            `;
+            document.body.appendChild(newWindow);
+
+            const iframe = document.getElementById(iframeId);
+            iframe.cacheUrl = url;
+            saveState();
+        }
+
+        function createShortcut(title, url) {
+            const shortcut = document.createElement('div');
+            shortcut.className = 'shortcut';
+            shortcut.dataset.url = url;
+
+            const span = document.createElement('span');
+            span.textContent = title;
+            shortcut.appendChild(span);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'x';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                shortcut.remove();
+                saveState();
+            };
+            shortcut.appendChild(deleteBtn);
+
+            shortcut.onclick = () => createBrowserWindow(url);
+            document.getElementById('desktop').appendChild(shortcut);
+            saveState();
+        }
+
+        function addShortcut() {
+            const title = prompt('请输入快捷方式标题：');
+            const url = prompt('请输入网址：', 'https://');
+            if (title && url) {
+                createShortcut(title, url);
+            }
+        }
+
+        document.getElementById('addShortcutBtn').onclick = addShortcut;
+
+        document.getElementById('desktop').addEventListener('click', saveState);
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId).remove();
+            saveState();
+        }
+
+        function refreshWin(iframeId) {
+            const iframe = document.getElementById(iframeId);
+            iframe.src = iframe.cacheUrl;
+        }
+
+        function dragWindow(windowId, event) {
+            const windowElem = document.getElementById(windowId);
+            windowElem.style.zIndex = ++zIndex;
+            let posX = event.clientX;
+            let posY = event.clientY;
+            let windowLeft = windowElem.offsetLeft;
+            let windowTop = windowElem.offsetTop;
+
+            function moveWindow(event) {
+                let dx = event.clientX - posX;
+                let dy = event.clientY - posY;
+                windowElem.style.left = windowLeft + dx + 'px';
+                windowElem.style.top = windowTop + dy + 'px';
+            }
+
+            function stopMove() {
+                document.removeEventListener('mousemove', moveWindow);
+                document.removeEventListener('mouseup', stopMove);
+                saveState();
+            }
+
+            document.addEventListener('mousemove', moveWindow);
+            document.addEventListener('mouseup', stopMove);
+        }
+
+        function startResize(event) {
+            const resizeHandle = event.target;
+            const windowElem = resizeHandle.parentElement;
+            let startX = event.clientX;
+            let startY = event.clientY;
+            let startWidth = windowElem.offsetWidth;
+            let startHeight = windowElem.offsetHeight;
+
+            function resizeWindow(event) {
+                let dx = event.clientX - startX;
+                let dy = event.clientY - startY;
+                windowElem.style.width = startWidth + dx + 'px';
+                windowElem.style.height = startHeight + dy + 'px';
+            }
+
+            function stopResize() {
+                document.removeEventListener('mousemove', resizeWindow);
+                document.removeEventListener('mouseup', stopResize);
+                saveState();
+            }
+
+            document.addEventListener('mousemove', resizeWindow);
+            document.addEventListener('mouseup', stopResize);
+        }
+
+        window.onload = loadState;
+    </script>
+</body>
+
+</html>
