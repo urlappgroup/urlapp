@@ -11,7 +11,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 .vscode-dark img[src$=\#gh-light-mode-only],
-.vscode-light img[src$=\#gh-dark-mode-only] {
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
 	display: none;
 }
 
@@ -159,23 +161,20 @@
 <p>github的urlapp项目包含了urlapp项目全部代码和urlapp项目收集的urlapp数据。</p>
 <p>您可以使用issues板块讨论项目问题，使用Discussions板块讨论任何问题和发布urlapp</p>
 <h2 id="在线服务地址">在线服务地址</h2>
-<p><a href="https://urlapp.org">urlapp.org</a>是项目的部署地址</p>
+<p><a href="https://urlapp.org">urlapp.org</a>是项目的一个部署地址</p>
 <p>不过，为了提高服务可用性，后续会部署到包括ipfs等更多渠道。您也可以直接拉取项目源码自行部署。</p>
 <h1 id="使用urlapp">使用urlapp</h1>
 <p>您可以点击【直接打开】按钮直接使用<br>
 也可以点击【复制url】按钮复制dataurl，然后贴到浏览器使用</p>
 <p>使用dataurl运行时会有很多限制（比如不能使用本地存储），因此一些涉及存储功能的app需要保存为本地html文件后使用</p>
-<p>更多说明见<a href="https://urlapp.org/appFile/urlAppWhitePaper.html">网站使用说明</a></p>
+<p>更多说明见<a href="https://urlapp.org/apps/doc2024072200002/aboutUrlappOrg.html">网站使用说明</a></p>
 <h1 id="开发urlapp">开发urlapp</h1>
 <p>urlapp本身就是一个单页面html应用，因此使用html+css+js开发一个html文件作为app即可<br>
-具体说明见文档:<a href="https://urlapp.org/appFile/howToMakeUrlApp.html">如何开发urlapp</a></p>
+具体说明见文档:<a href="https://urlapp.org/apps/doc2024072200004/howToMakeUrlApp.html">如何开发urlapp</a></p>
 <h1 id="发布urlapp到urlapp项目">发布urlapp到urlapp项目</h1>
 <p>出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程，目前提供如下两个渠道发布新urlapp并收录入urlapp项目<br>
-具体说明见文档:<a href="https://urlapp.org/appFile/howToPublish.html">使用github discussions发布</a></p>
-<h2 id="1使用邮件">1使用邮件</h2>
-<p>邮箱：urlappgroup@gmail.com
-您可以通过邮箱发布/更新urlapp，收到邮件后会进行人工审核，通过后会更新到urlapp项目中</p>
-<h2 id="2使用github-discussions">2使用github discussions</h2>
+具体说明见文档:<a href="https://urlapp.org/apps/doc2024072200003/howToPublish.html">使用github discussions发布</a></p>
+<h2 id="使用github-discussions">使用github discussions</h2>
 <p><a href="https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp">发布板块地址</a>
 使用github discussions通过发帖的方式发布</p>
 

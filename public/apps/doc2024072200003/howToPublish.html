@@ -11,7 +11,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 .vscode-dark img[src$=\#gh-light-mode-only],
-.vscode-light img[src$=\#gh-dark-mode-only] {
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
 	display: none;
 }
 
@@ -146,10 +148,11 @@
 <h1 id="使用github-discussions提交">使用github discussions提交</h1>
 <p><a href="https://github.com/urlappgroup/urlapp/discussions/categories/publish-urlapp">发布板块地址</a></p>
 <p>点击【New discussion】，选择category为publish-urlapp，提交一个urlapp发布请求</p>
-<p>后续进展会通过回帖，修改状态方式反馈</p>
+<p>后续平台收录进展会通过回帖，修改状态方式反馈</p>
+<p>发布和更新可以独立发帖，但是建议附带第一次发布app帖子的跳转链接，平台会以首次发布帖子的讨论和评价作为排序指标参考</p>
 <h1 id="发布请求格式">发布请求格式</h1>
 <h3 id="标题格式">标题格式</h3>
-<p>[发布]appId-app名称</p>
+<p>[发布/更新]app名称-版本号</p>
 <table>
 <thead>
 <tr>
@@ -160,9 +163,9 @@
 </thead>
 <tbody>
 <tr>
-<td>appId</td>
-<td>唯一确定一个app，由邮箱和app驼峰名称拼接得到</td>
-<td><a href="mailto:abc@163.com">abc@163.com</a>/demoApp</td>
+<td>更新类型</td>
+<td>[发布]或者[发布]</td>
+<td>[发布]</td>
 </tr>
 <tr>
 <td>app名称</td>
@@ -170,9 +173,14 @@
 <td>示例app</td>
 </tr>
 <tr>
-<td>邮件标题</td>
-<td>拼接好的邮件标题</td>
-<td>[发布]abc@163.com/demoApp-示例app</td>
+<td>版本号</td>
+<td>app的版本号</td>
+<td>v1.0.0</td>
+</tr>
+<tr>
+<td>完整标题</td>
+<td>上述元素拼接好的标题</td>
+<td>[发布]示例app-v1.0.0</td>
 </tr>
 </tbody>
 </table>
@@ -199,12 +207,17 @@
 </tr>
 <tr>
 <td>tag</td>
-<td>分类标签，填写你认为合理的分类标签，但是urlapp平台会根据需要修改</td>
+<td>分类标签，目前只支持（在线工具,游戏,微应用,原型设计），urlapp平台可能会跟进需要修改分类</td>
 <td>文本编辑</td>
 </tr>
 <tr>
 <td>fileName</td>
-<td>app的html文件名称</td>
+<td>app的html文件名称，最大200k</td>
+<td>textEditor.html</td>
+</tr>
+<tr>
+<td>appDocName</td>
+<td>(可选)app的html说明文档文件名称，允许附加一个说明文档，最大1M，会在详情页展示</td>
 <td>textEditor.html</td>
 </tr>
 <tr>
@@ -229,8 +242,8 @@
 </tr>
 <tr>
 <td>appId</td>
-<td>唯一确定app的id，由作者邮箱+驼峰app名称拼接</td>
-<td><a href="mailto:abc@163.com">abc@163.com</a>/textEditor</td>
+<td>平台为app生成的唯一id，更新时需提交，创建时不用填</td>
+<td>app2024072200001</td>
 </tr>
 </tbody>
 </table>
@@ -240,11 +253,12 @@
         &quot;desc&quot;: &quot;一个极简文本编辑页面,适合临时文本编辑/查看场景.还能贴入图片&quot;,
         &quot;tag&quot;: &quot;文本编辑&quot;,
         &quot;fileName&quot;: &quot;textEditor.html&quot;,
+        &quot;appDocName&quot;: &quot;appDoc.html&quot;,
         &quot;userName&quot;: &quot;meepo&quot;,
         &quot;userEmail&quot;: &quot;meepo@meepo.com&quot;,
         &quot;version&quot;: &quot;v1.0.0&quot;,
         &quot;license&quot;: &quot;Apache-2.0&quot;,
-        &quot;appId&quot;: &quot;meepo@meepo.com/textEditor&quot;
+        &quot;appId&quot;: &quot;app2024072200009&quot;
     }
 </code></pre>
 <h3 id="附件填写">附件填写</h3>

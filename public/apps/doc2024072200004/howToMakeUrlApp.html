@@ -11,7 +11,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 .vscode-dark img[src$=\#gh-light-mode-only],
-.vscode-light img[src$=\#gh-dark-mode-only] {
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
 	display: none;
 }
 
@@ -212,7 +214,7 @@
 <h1 id="如何开发">如何开发</h1>
 <p>urlapp本身就是一个单页面html应用，因此使用html+css+js开发一个html文件作为app即可</p>
 <p>可以参考<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs">Data URL 规范</a>自行编码为data url</p>
-<p>urlapp项目附带一个转换工具:<a href="/appFile/makeDataUrl.html">html转dataurl</a></p>
+<p>urlapp项目附带一个转换工具:<a href="/apps/app2024072200003/makeDataUrl.html">html转dataurl</a></p>
 <h1 id="其他注意事项">其他注意事项</h1>
 <ol>
 <li>

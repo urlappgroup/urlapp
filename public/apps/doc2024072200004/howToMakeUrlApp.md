@@ -42,7 +42,7 @@ urlapp本身就是一个单页面html应用，因此使用html+css+js开发一�
 
 可以参考[Data URL 规范](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)自行编码为data url
 
-urlapp项目附带一个转换工具:[html转dataurl](/appFile/makeDataUrl.html)
+urlapp项目附带一个转换工具:[html转dataurl](/apps/app2024072200003/makeDataUrl.html)
 
 # 其他注意事项
 1. html文件大小  

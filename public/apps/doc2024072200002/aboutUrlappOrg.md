@@ -13,7 +13,7 @@
 
 * 下载-载urlapp的源代码,是一个html文件,可以保存后使用  
 
-![main](imgs/webPageUse.png)
+![main](/apps/doc2024072200002/userManual-main.jpg)
 
  
 
