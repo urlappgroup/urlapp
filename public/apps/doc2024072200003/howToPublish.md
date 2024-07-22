@@ -38,7 +38,7 @@
 | fileName  | app的html文件名称，最大200k | textEditor.html |
 | appDocName  | (可选)app的html说明文档文件名称，允许附加一个说明文档，最大1M，会在详情页展示 | textEditor.html |
 | userName  | 用户昵称 | 张三 |
-| userEmail  | 重要！这个邮箱用来确认app归属，只使用这个邮箱确认app归属人，可以不是发送邮件的邮箱 | aaa@126.com |
+| userEmail  | 重要！这个邮箱用来确认app归属，只使用这个邮箱确认app归属人，可以不是发送邮件的邮箱.!!!!注意，邮箱会被公开展示，也是作者的联系方式 | aaa@126.com |
 | version  | app版本号，“v1.0.0”格式 | v1.0.0 |
 | license  | 开源协议名称，建议使用MIT或者Apache-2.0 | Apache-2.0 |
 | appId  | 平台为app生成的唯一id，更新时需提交，创建时不用填 |  app2024072200001|
