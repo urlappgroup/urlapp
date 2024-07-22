@@ -107,7 +107,7 @@ const ListItem = ({ itemData,showType="list" }) => {
         {itemData.userName}
         &nbsp;· {formatDateTime(itemData.updateTime)}
         &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
-        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制url</a> · <a href="#" onClick={() => openAppHtml()} >直接打开</a>
+        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制urlapp</a> · <a href="#" onClick={() => openAppHtml()} >直接打开</a>
         &nbsp;· <a href={appUrl} download={itemData.title}>下载</a>
         &nbsp;· <a href="#" onClick={() => shareCurPage()} >分享</a>
         {itemData.discussUrl && " · "}{itemData.discussUrl && <a href={itemData.discussUrl}  >讨论和反馈</a>}

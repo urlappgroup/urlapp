@@ -117,7 +117,16 @@
 <body>
     <div id="desktop">
         <button class="shortcut" onclick='createBrowserWindow()'>点击创建浏览器窗口</button><br>
-        <button id="addShortcutBtn" class="shortcut">添加快捷方式</button>
+        <button id="addShortcutBtn" class="shortcut">添加快捷方式</button>><br>><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org")'>urlapp</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org/apps/doc2024072200001/urlAppWhitePaper")'>关于urlapp</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org/apps/app2024072200001/notebook")'>文本编辑</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("data:text/html;base64,PGh0bWwgY29udGVudGVkaXRhYmxlPmVkaXQgbWU8L2h0bWw+")'>html文本编辑</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org/apps/app2024072200013/card")'>纸牌</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org/apps/app2024072200009/simpleTimer")'>番茄计时器</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org/apps/app2024072200010/fourArea")'>任务四象限</button><br>
+        <button class="shortcut" onclick='createBrowserWindow("https://urlapp.org/apps/app2024072200017/autom")'>Autumn</button><br>
+
     </div>
 
     <script>
@@ -162,6 +171,10 @@
         }
 
         function createBrowserWindow(url, newWidth = 50 * window.innerWidth / 100, newHeight = 50 * window.innerHeight / 100, left = '100px', top = '100px', id = `window${zIndex}`) {
+            if(!url){
+                 url = prompt('请输入网址：', 'https://');
+            }
+          
             const windowId = id;
             const iframeId = `iframe${zIndex}`;
 
