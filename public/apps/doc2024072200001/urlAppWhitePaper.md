@@ -52,7 +52,7 @@ urlapp本身就是一个单页面html应用，因此使用html+css+js开发一�
 
 
 # 发布urlapp到urlapp项目
-出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程，目前提供如下两个渠道发布新urlapp并收录入urlapp项目  
+出于内容安全和服务可用性架构设计考虑，不提供实时录入urlapp的方法，需要有一个人工审核流程，目前提供如下渠道发布新urlapp并收录入urlapp项目  
 具体说明见文档:[使用github discussions发布](https://urlapp.org/apps/doc2024072200003/howToPublish.html)
 
 ## 使用github discussions
