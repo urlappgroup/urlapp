@@ -25,6 +25,8 @@ function sortByOrderList(stringList, orderList) {
 }
 
 const TabBar = ({ curTag,curMark }) => {
+    curTag=curTag?curTag:"all"
+    curMark=curMark?curMark:"all"
     const navigate = useNavigate();
     const handleClick = (path) => {
         navigate(path);
