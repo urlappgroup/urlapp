@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URL Encode/Decode Tool</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        /* display: flex; */
+        flex-direction: column;
+        width: 100%;
+        /* max-width: 800px; */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    textarea {
+        width: 48%;
+        height: 90vh;
+
+        /* height: calc(150vh - 120px); */
+        box-sizing: border-box;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        resize: none;
+    }
+    button {
+        width: 48%;
+        /* padding: 10px; */
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        display: inline-block;
+    }
+    button:hover {
+        background-color: #a1416a;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <button onclick="encodeText()">Encode</button>
+    <button onclick="decodeText()">Decode</button>
+    <textarea id="input" placeholder="Enter text to encode..."></textarea>
+    <textarea id="output" placeholder="Enter text to decode..."></textarea>
+</div>
+
+<script>
+    function encodeText() {
+        var input = document.getElementById('input').value;
+        var encoded = encodeURIComponent(input);
+        document.getElementById('output').value = encoded;
+    }
+
+    function decodeText() {
+        var input = document.getElementById('output').value;
+        var decoded = decodeURIComponent(input);
+        document.getElementById('input').value = decoded;
+    }
+</script>
+</body>
+</html>

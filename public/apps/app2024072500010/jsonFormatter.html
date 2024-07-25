@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Formatter</title>
+<style>
+  body, html {
+    height: 100%;
+    width: 100vw;
+    margin: 0;
+    display: flex;
+    font-family: Arial, sans-serif;
+  }
+  textarea {
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box; /* Ensures no overflow */
+    border-width: 1px; /* Removes the border */
+    outline: none; /* Removes the outline */
+    resize: none; /* Prevent resizing */
+    padding: 10px; /* Adds some padding inside the textarea */
+    font-size: 16px; /* Increases font size for better readability */
+  }
+</style>
+</head>
+<body>
+<textarea id="inputJson" placeholder="Paste JSON here"></textarea>
+<textarea id="outputJson" placeholder="Formatted JSON will appear here" readonly></textarea>
+
+<script>
+  document.getElementById('inputJson').addEventListener('input', function() {
+    var input = this.value;
+    try {
+      var output = JSON.stringify(JSON.parse(input), null, 4);
+      document.getElementById('outputJson').value = output;
+    } catch (e) {
+      document.getElementById('outputJson').value = "Error: " + e.message;
+    }
+  });
+</script>
+</body>
+</html>

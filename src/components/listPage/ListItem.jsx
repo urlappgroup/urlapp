@@ -94,20 +94,21 @@ const ListItem = ({ itemData,showType="list" }) => {
   }
 
   let appUrl=getAppHtmlPath(itemData);
-  console.log(appUrl)
+  // console.log(appUrl)
 
   return (
     <div className="ua-post-item"  >
 
-      <a className="ua-post-title" onClick={() => onItemCardClick()} >{itemData.title}</a>
+      <a className="ua-post-title" onClick={() => openAppHtml()} >{itemData.title}</a>
 
-      <p className="ua-post-summary" title={itemData.desc} onClick={() => onItemCardClick()} >{itemData.desc}</p>
+      <p className="ua-post-summary" title={itemData.desc} onClick={() => openAppHtml()} >{itemData.desc}</p>
 
       <div className="ua-post-metadata" title={"appId:" + itemData.appId}>
         {itemData.userName}
         &nbsp;· {formatDateTime(itemData.updateTime)}
         &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
-        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制urlapp</a> · <a href="#" onClick={() => openAppHtml()} >直接打开</a>
+        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制urlapp</a> 
+        &nbsp;· {itemData.appDocName && <a href="#" onClick={() => openAppDetailPage()} >使用说明</a>}
         &nbsp;· <a href={appUrl} download={itemData.title}>下载</a>
         &nbsp;· <a href="#" onClick={() => shareCurPage()} >分享</a>
         {itemData.discussUrl && " · "}{itemData.discussUrl && <a href={itemData.discussUrl}  >讨论和反馈</a>}

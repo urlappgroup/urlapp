@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>便签分享</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: grid;
+        }
+
+        .quadrant {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            background-color: #c7b3f8;
+        }
+
+        .quadrant button {
+            width: 200px;
+        }
+
+        .quadrant input {
+            width: 50vw;
+        }
+
+        .quadrant textarea {
+            flex-grow: 1;
+            margin-top: 10px;
+            padding: 15px;
+            border: none;
+            resize: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quadrant">
+        <span>
+            <button onclick="saveData()">复制并分享当前页面</button>
+            <input id="urlText" type="text" placeholder="分享链接会在这里显示"> </input>
+        </span>
+        <textarea id="textarea1"
+            placeholder="这个程序用来分享信息.填写内容然后用分享按钮生成链接分享给别人,复制到浏览器地址栏打开.数据存储在链接里,无需网络,永远可用"></textarea>
+    </div>
+
+
+    <script>
+
+
+        function saveData() {
+            let textarea1 = document.querySelector('#textarea1')
+            saveAndShare(textarea1.value)
+        }
+        function saveAndShare(textData) {
+            let textarea1 = document.querySelector('#textarea1')
+            let text = textData;
+            textarea1.innerHTML = text
+            const html = document.documentElement.outerHTML;
+
+
+            const base64 = btoa(String.fromCharCode(...new Uint8Array(new TextEncoder().encode(html))));
+            const dataUrl = `data:text/html;base64,${base64}`;
+
+
+
+            document.querySelector('#urlText').value = dataUrl
+            if (!navigator.clipboard) {
+                alert('使用dataurl打开的页面不支持剪贴板,请手动复制.\n保存html文件后运行可以支持复制剪贴板');
+                return
+            }
+            navigator.clipboard.writeText(dataUrl).then(function () {
+                alert('url已复制到剪贴板,可粘贴到浏览器地址栏打开');
+            }).catch(function (err) {
+                console.error('无法复制文本: ', err);
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

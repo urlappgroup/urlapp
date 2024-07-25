@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Playful Candy-Colored Screen Saver</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background: radial-gradient(circle, #ffb6b9 0%, #fae3d9 50%, #bbded6 100%);
+        animation: backgroundAnimation 10s ease infinite alternate;
+    }
+    @keyframes backgroundAnimation {
+        0% {
+            filter: hue-rotate(0deg);
+        }
+        100% {
+            filter: hue-rotate(360deg);
+        }
+    }
+    .ball {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.7;
+        will-change: transform;
+    }
+    .fun-event {
+        position: absolute;
+        animation: fun-event-animation 5s ease-in-out infinite;
+    }
+    @keyframes fun-event-animation {
+        0%, 100% {
+            transform: translateY(0) scale(1);
+        }
+        50% {
+            transform: translateY(-20px) scale(1.1);
+        }
+    }
+</style>
+</head>
+<body>
+<script>
+class Ball {
+    constructor(element) {
+        this.element = element;
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.vx = (Math.random() - 0.5) * 5;
+        this.vy = (Math.random() - 0.5) * 5;
+        this.size = Math.random() * 100 + 10;
+
+        this.updateStyle();
+    }
+
+    updateStyle() {
+        this.element.style.width = `${this.size}px`;
+        this.element.style.height = `${this.size}px`;
+        this.element.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        this.element.style.opacity = `${Math.random().toFixed(2)}`;
+    }
+
+    move() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        const left = this.x - this.size / 2;
+        const top = this.y - this.size / 2;
+
+        if (left <= 0 || left >= window.innerWidth - this.size) {
+            this.vx *= -1;
+        }
+
+        if (top <= 0 || top >= window.innerHeight - this.size) {
+            this.vy *= -1;
+        }
+
+        this.element.style.transform = `translate(${left}px, ${top}px)`;
+    }
+}
+
+// Initialize balls
+const balls = [];
+for (let i = 0; i < 100; i++) {
+    const ballElement = document.createElement('div');
+    ballElement.classList.add('ball');
+    document.body.appendChild(ballElement);
+    balls.push(new Ball(ballElement));
+}
+
+function sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+// Animation loop
+function animate() {
+
+    balls.forEach(ball => ball.move());
+    requestAnimationFrame(animate);
+
+}
+
+requestAnimationFrame(animate);
+ 
+</script>
+</body>
+</html>

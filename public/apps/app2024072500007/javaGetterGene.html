@@ -1,0 +1,71 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetterGenerator</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body, html {
+        height: 100%;
+        width: 100%;
+
+        margin: 0;
+        display: flex;
+    }
+    textarea {
+        width: 50%;
+        height: 100%;
+        padding: 10px;
+        border: none;
+        border-right: 1px solid #ccc;
+        resize: none;
+    }
+    #output {
+        border-right: 0;
+    }
+</style>
+</head>
+<body>
+    <textarea id="input" placeholder="Paste your Java POJO here..."></textarea>
+    <textarea id="output" placeholder="Setters will appear here..." readonly></textarea>
+
+<script>
+    const inputArea = document.getElementById('input');
+    const outputArea = document.getElementById('output');
+
+    inputArea.addEventListener('input', () => {
+        const lines = inputArea.value.split('\n');
+        let className = '';
+        let setters = [];
+
+        lines.forEach(line => {
+            // Extract class name
+            if (line.includes('class')) {
+                const match = line.match(/class\s+(\w+)/);
+                if (match && match[1]) {
+                    className = match[1];
+                    setters.push(`${className} bean = new ${className}();`);
+                }
+            }
+
+            // Extract fields and generate setters
+            const fieldMatch = line.trim().match(/private\s+(\w+)\s+(\w+);/);
+            if (fieldMatch) {
+                const [_, fieldType, fieldName] = fieldMatch;
+                const className =   fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+                 setters.push(`bean.set${className}(obj.get${className}());`);
+            }
+        });
+
+        outputArea.value = setters.join('\n');
+    });
+</script>
+</body>
+</html>
+

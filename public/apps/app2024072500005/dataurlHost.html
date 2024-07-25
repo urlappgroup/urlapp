@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe 渲染工具</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <iframe id="iframe" src=""></iframe>
+
+    <script>
+
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function promptForURL() {
+            const userURL = prompt("请输入要加载的dataurl：\n输入的url数据会被保存在浏览器地址栏,类似xx.html?url=data:xxx ,然后,保存拼接好的链接即可作为普通url使用");
+            if (userURL) {
+                const newUrl = new URL(window.location.href);
+                newUrl.searchParams.set('url', userURL);
+                window.location.href = newUrl.toString();
+            }
+        }
+
+        (function () {
+            const url = getURLParameter('url');
+            const iframe = document.getElementById('iframe');
+
+            if (url) {
+                iframe.src = url;
+            } else {
+                promptForURL();
+            }
+        })();
+    </script>
+</body>
+
+</html>

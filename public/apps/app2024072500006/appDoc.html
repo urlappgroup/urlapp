@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x5b57;&#x7b26;&#x96c6;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <p>支持自定义字符集的编码器/解码器</p>
+<p>可以定制自己的秘密语言啦</p>
+<p>功能:<br>
+1 自定义字符集,编码输入内容<br>
+2 自定义字符集,解码输入内容</p>
+<p>用法:<br>
+1在字符集中,输入自定义的字符集作为密码本<br>
+任意unicode字符均可<br>
+注意不能重复<br>
+顺序相关,顺序变化编码结果也会变化</p>
+<p>2编码:输入编码内容<br>
+在“输入编码内容”文本框中输入,自动实时编码并输出到“输入解码内容”文本框</p>
+<p>3解码:输入解码内容<br>
+在“输入解码内容”文本框中输入,自动实时编码并输出到“输入编码内容”文本框</p>
+<h1 id="字符集">字符集</h1>
+<p>根据字符集合,可以实现很多有趣的编码效果</p>
+<p>摩尔斯:._<br>
+oo:oO<br>
+emoji:😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗🤔😐😑😶😏😣😥😮🤐😯😪😫😴😌😛😜😝😒😓😔😕🙃🤑😲🙄😳😞😟😠🙁😖😫😩😤<br>
+乐符:♪♫♩♬<br>
+音乐:🎙🎤🎧🎵🎶🎷🎸🎹🎺🎻🎼🥁🪐🪑🪒🪓🪔🪕🪖🪗🪘<br>
+月相:🌑🌒🌓🌔🌕🌖🌗🌘🌙<br>
+扑克:🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃜🃝🃞<br>
+象形文字:𓀀𓀁<br>
+颜色:🟦🟥🟧🟨🟩🟪🟫</p>
+<p>还可以用汉字,千字文,数字等,发挥想象力吧</p>
+<p>不可见字符:<br>
+这是一种特殊玩法,利用unicode的不可见字符,其实数据是有的,但是看不见,你可以把它复制保存,这样即便别人打开你的加密问价,也看不到任何东西<br>
+可以把不可见字符编码结果包裹到可见文本中,看起来就是普通文本,但是内容密文</p>
+<p>最后声明一个分享格式:<br>
+(字符集)[编码内容]<br>
+这样未来解码的时候就知道怎么解析了,但不知道的人还是不知道是什么</p>
+<p>例如:
+(🟦🟥🟧🟨🟩🟪🟫)[🟧🟥🟥🟪🟥🟦🟫🟦🟥🟪🟩🟦🟧🟥🟥🟫🟨🟦🟧🟨🟦🟫🟥🟥🟧🟥🟥🟪🟨🟦🟦🟥🟦🟥🟦🟦]</p>
+
+            
+            
+        </body>
+        </html>

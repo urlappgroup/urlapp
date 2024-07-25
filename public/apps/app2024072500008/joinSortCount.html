@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>文本字段处理工具</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+    .textarea-container {
+        display: flex;
+        flex: 1;
+        gap: 10px;
+    }
+    textarea {
+        flex: 1;
+        resize: none;
+    }
+</style>
+</head>
+<body>
+<div>
+    <label for="separator">分隔符号（支持多个，例如: ,|\n）:</label>
+    <input type="text" id="separator" value=",">
+</div>
+<div>
+    <label for="sortOrder">排序方式:</label>
+    <select id="sortOrder">
+        <option value="none">不排序</option>
+        <option value="asc">正序</option>
+        <option value="desc">倒序</option>
+    </select>
+</div>
+<div>
+    <label for="distinct">是否去重:</label>
+    <input type="checkbox" id="distinct" checked>
+</div>
+<div>
+    <label for="sortBy">排序依据:</label>
+    <select id="sortBy">
+        <option value="key">Key</option>
+        <option value="count">Count</option>
+    </select>
+</div>
+<div>
+    <label for="joinKeys">是否合并所有Key为一行:</label>
+    <input type="checkbox" id="joinKeys">
+</div>
+<div>
+    <label for="showCount">是否输出Count:</label>
+    <input type="checkbox" id="showCount" checked>
+</div>
+<div>
+    <button onclick="processText()">处理文本</button>
+</div>
+<div class="textarea-container">
+    <textarea id="inputText" placeholder="在此输入原始数据..."></textarea>
+    <textarea id="outputText" placeholder="输出结果..." readonly></textarea>
+</div>
+<script>
+function processText() {
+    const separatorInput = document.getElementById('separator').value;
+    const sortOrder = document.getElementById('sortOrder').value;
+    const distinct = document.getElementById('distinct').checked;
+    const sortBy = document.getElementById('sortBy').value;
+    const joinKeys = document.getElementById('joinKeys').checked;
+    const showCount = document.getElementById('showCount').checked;
+    const inputText = document.getElementById('inputText').value;
+
+    // 创建分隔符正则表达式
+    const separatorRegExp = new RegExp('[' + separatorInput + ']+');
+    let fields = inputText.split(separatorRegExp);
+
+    // 去重并计数
+    const fieldCounts = fields.reduce((acc, field) => {
+        acc[field] = (acc[field] || 0) + 1;
+        return acc;
+    }, {});
+
+    let entries = distinct ? Object.entries(fieldCounts) : fields.map(field => [field, fieldCounts[field]]);
+
+    // 排序
+    if (sortOrder !== 'none') {
+        const orderMultiplier = sortOrder === 'asc' ? 1 : -1;
+        entries.sort((a, b) => {
+            const keyA = sortBy === 'key' ? a[0] : a[1];
+            const keyB = sortBy === 'key' ? b[0] : b[1];
+            if (keyA < keyB) return -1 * orderMultiplier;
+            if (keyA > keyB) return 1 * orderMultiplier;
+            return 0;
+        });
+    }
+
+    // 输出结果
+    let resultText = entries.map(entry => 
+        joinKeys ? entry[0] : entry[0] + (showCount ? ` (${entry[1]})` : '')).join(joinKeys ? ',' : '\n');
+
+    document.getElementById('outputText').value = resultText;
+}
+</script>
+</body>
+</html>

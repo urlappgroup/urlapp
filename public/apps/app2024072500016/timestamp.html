@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间戳转换工具</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 50vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>时间戳转换工具</h1>
+    <textarea id="input" placeholder="输入时间戳">在此贴入包含时间戳的文本,如果包含时间戳,会翻译替换后放到下方文本框,例如1703045602576</textarea>
+    <textarea id="output" readonly></textarea>
+    
+    <script>
+        function convertTimestamp() {
+            let input = document.getElementById('input').value;
+            let regex = /\b\d{13}\b/g; // 匹配13位数字的时间戳
+            let matched = input.match(regex);
+            let replaced = new Set();
+            if (matched) {
+                matched.forEach(timestamp => {
+                    if (!replaced.has(timestamp)) {
+                        let date = new Date(parseInt(timestamp));
+                        let year = date.getFullYear();
+                        let month = String(date.getMonth() + 1).padStart(2, '0');
+                        let day = String(date.getDate()).padStart(2, '0');
+                        let hours = String(date.getHours()).padStart(2, '0');
+                        let minutes = String(date.getMinutes()).padStart(2, '0');
+                        let seconds = String(date.getSeconds()).padStart(2, '0');
+                        let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                        let replacement = timestamp + ' (' + formattedDate + ')';
+                        input = input.replaceAll(timestamp, replacement);
+                        replaced.add(timestamp);
+                    }
+                });
+                document.getElementById('output').value = input;
+            } else {
+                document.getElementById('output').value = "解析失败，未找到有效的13位数字时间戳";
+            }
+        }
+
+        document.getElementById('input').addEventListener('input', convertTimestamp);
+        convertTimestamp();
+    </script>
+</body>
+</html>

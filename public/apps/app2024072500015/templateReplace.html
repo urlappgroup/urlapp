@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模版替换</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  #container {
+    display: flex;
+    height: 100%;
+  }
+  textarea {
+    width: 33.33%;
+    height: 100%;
+    box-sizing: border-box; /* 防止border和padding影响宽度和高度 */
+    border: 1px solid #ddd; /* 边框显示 */
+    padding: 10px; /* 内边距 */
+    margin: 0; /* 避免外边距带来的影响 */
+    resize: none; /* 禁止调整大小 */
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <textarea id="config" placeholder="Enter JSON config...">
+
+{
+    "name":"abc",
+    "age":18
+}
+  </textarea>
+  <textarea id="template" placeholder="Enter template...">
+
+hello
+name is ${name} age is ${age} 123
+
+  </textarea>
+  <textarea id="output" placeholder="Output will be shown here..." readonly></textarea>
+</div>
+
+<script>
+  function replaceTemplateVariables(config, template) {
+    let output = template;
+    try {
+      const params = JSON.parse(config);
+      for (const key in params) {
+        const re = new RegExp(`\\$\{${key}\}`, 'g');
+        output = output.replace(re, params[key]);
+      }
+    } catch (e) {
+      return "Invalid JSON input!";
+    }
+    return output;
+  }
+
+  document.getElementById('config').addEventListener('input', function() {
+    const config = this.value;
+    const template = document.getElementById('template').value;
+    document.getElementById('output').value = replaceTemplateVariables(config, template);
+  });
+
+  document.getElementById('template').addEventListener('input', function() {
+    const config = document.getElementById('config').value;
+    const template = this.value;
+    document.getElementById('output').value = replaceTemplateVariables(config, template);
+  });
+</script>
+</body>
+</html>

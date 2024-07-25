@@ -9,6 +9,8 @@ const ListPageLayout = () => {
   let location = useLocation();
   let query = new URLSearchParams(location.search);
   let tag = query.get('tag');
+  let mark = query.get('mark')?query.get('mark'):"";
+
   let appId = query.get('appId');
   let searchKey = query.get('searchKey');
 
@@ -22,14 +24,14 @@ const ListPageLayout = () => {
 
   function checkMatch(searchKey, item) {
 
-    if (item.title.includes(searchKey) || item.desc.includes(searchKey)) {
+    if (item.title.includes(searchKey) || item.desc.includes(searchKey)|| item.tag.includes(searchKey)|| item.marks.includes(searchKey)) {
       return true;
     }
     return false;
   }
   return (
     <>
-      <TabBar curTag={tag} />
+      <TabBar curTag={tag}  curMark={mark} />
 
       <div className="ua-main-content">
 
@@ -39,20 +41,23 @@ const ListPageLayout = () => {
           {
             allList
               .filter(item => {
+     
                 if (appId) { //有id就只用id
                   return item.appId == appId;
                 }
                 if (searchKey) {
                   return checkMatch(searchKey, item);
                 }
-                if (!tag || tag == 'all') {
-                  return true;
-                }
+                console.log(item && item.tag == tag && item.marks == mark)
+                console.log(item.tag, item.marks, tag, mark)
 
-                return item && item.tag == tag
+                return item 
+                && (!tag || tag == 'all' ||item.tag == tag )
+                &&  (!mark || mark == 'all' ||item.marks == mark)
 
               })
               .map((item) => {
+                console.log("aa",item.tag, item.marks, tag, mark)
 
                 return <ListItem key={item.fileName} itemData={item} />
 

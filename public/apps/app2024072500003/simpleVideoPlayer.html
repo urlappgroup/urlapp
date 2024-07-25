@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<input type="file" id="input" accept="video/*">
+<br>
+<video src="" id="video" controls autoplay></video>
+<script>
+    input.onchange = () => {
+        const file = input.files?.[0];
+        if (file) {
+            video.src = URL.createObjectURL(file);
+        }
+    };
+</script>
+<!-- https://www.v2ex.com/member/DOLLOR -->

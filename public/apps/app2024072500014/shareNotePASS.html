@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>便签分享</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: grid;
+        }
+
+        .quadrant {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            background-color: #c7b3f8;
+        }
+
+        .quadrant button {
+            width: 200px;
+        }
+
+        .quadrant input {
+            width: 50vw;
+        }
+
+        .quadrant textarea {
+            flex-grow: 1;
+            margin-top: 10px;
+            padding: 15px;
+            border: none;
+            resize: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quadrant">
+        <span>
+            <button onclick="saveData()">复制并分享当前页面</button>
+            <button onclick="encyptShareData()">加密并分享当前页面</button>
+            <input id="urlText" type="text" placeholder="分享链接会在这里显示"> </input>
+            <div id="encyptCheck" style="display: none;"></div>
+        </span>
+        <textarea id="textarea1"
+            placeholder="这个程序用来分享信息.填写内容然后用分享按钮生成链接分享给别人,复制到浏览器地址栏打开.数据存储在链接里,无需网络,永远可用"></textarea>
+    </div>
+
+
+    <script>
+
+        async function aesEncrypt(text, password) {
+            const encoder = new TextEncoder();
+            const passphraseKey = encoder.encode(password);
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const keyMaterial = await crypto.subtle.importKey('raw', passphraseKey, { name: 'PBKDF2' }, false, ['deriveKey']);
+            const key = await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt', 'decrypt']
+            );
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const encodedText = encoder.encode(text);
+            const encryptedData = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, encodedText);
+            const encryptedArray = new Uint8Array(encryptedData);
+            const payload = new Uint8Array(salt.length + iv.length + encryptedArray.length);
+            payload.set(salt, 0);
+            payload.set(iv, salt.length);
+            payload.set(encryptedArray, salt.length + iv.length);
+            return btoa(String.fromCharCode.apply(null, payload));
+        }
+
+        async function aesDecrypt(encryptedText, password) {
+            const data = Uint8Array.from(atob(encryptedText), c => c.charCodeAt(0));
+            const salt = data.slice(0, 16);
+            const iv = data.slice(16, 16 + 12);
+            const encryptedData = data.slice(16 + 12);
+            const encoder = new TextEncoder();
+            const passphraseKey = encoder.encode(password);
+            const keyMaterial = await crypto.subtle.importKey('raw', passphraseKey, { name: 'PBKDF2' }, false, ['deriveKey']);
+            const key = await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt', 'decrypt']
+            );
+            const decryptedData = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, encryptedData);
+            const decoder = new TextDecoder();
+            return decoder.decode(decryptedData);
+        }
+
+
+
+
+
+
+        function checkEndypt() {
+            let encyptCheck = document.querySelector('#encyptCheck')
+            if (!!encyptCheck.innerHTML) {
+                if (!crypto.subtle) {
+                    alert("url模式不支持解密,ctrl+s请保存为html文件,再次打开")
+                    return
+                }
+
+                let password = prompt("内容已加密,请输入密码解密");
+                aesDecrypt(encyptCheck.innerHTML, password).then(decryptedText => {
+                    console.log('Decrypted:', decryptedText);
+                    if (decryptedText != "checkText") {
+                        alert("密码错误")
+                        return
+                    }
+                    let textarea1 = document.querySelector('#textarea1')
+
+                    aesDecrypt(textarea1.value, password).then(decryptedText => {
+                        console.log('Decrypted:', decryptedText);
+                        textarea1.value = decryptedText;
+                        encyptCheck.innerHTML = ""
+
+                    });
+
+                });
+            }
+        }
+        checkEndypt();
+
+        function encyptShareData() {
+            let password = prompt("'请输入密码'");
+            if (!password) {
+                alert("密码不能为空")
+                return
+            }
+
+
+            let textarea1 = document.querySelector('#textarea1')
+            let text = textarea1.value;
+
+            aesEncrypt("checkText", password).then(encryptedText => {
+                console.log('Encrypted-checkText:', encryptedText);
+                let encyptCheck = document.querySelector('#encyptCheck')
+                encyptCheck.innerHTML = encryptedText
+
+                aesEncrypt(text, password).then(encryptedText => {
+                    console.log('Encrypted:', encryptedText);
+                    saveAndShare(encryptedText)
+                });
+
+            });
+
+
+
+
+
+
+        }
+        function saveData() {
+            let textarea1 = document.querySelector('#textarea1')
+            saveAndShare(textarea1.value)
+        }
+        function saveAndShare(textData) {
+            let textarea1 = document.querySelector('#textarea1')
+            let text = textData;
+            textarea1.innerHTML = text
+            const html = document.documentElement.outerHTML;
+
+
+            const base64 = btoa(String.fromCharCode(...new Uint8Array(new TextEncoder().encode(html))));
+            const dataUrl = `data:text/html;base64,${base64}`;
+
+
+
+            document.querySelector('#urlText').value = dataUrl
+            if (!navigator.clipboard) {
+                alert('使用dataurl打开的页面不支持剪贴板,请手动复制.\n保存html文件后运行可以支持复制剪贴板');
+                return
+            }
+            navigator.clipboard.writeText(dataUrl).then(function () {
+                alert('url已复制到剪贴板,可粘贴到浏览器地址栏打开');
+            }).catch(function (err) {
+                console.error('无法复制文本: ', err);
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

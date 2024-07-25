@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>正则表达式匹配过滤器</title>
+  <script>
+    function filterData() {
+      // 获取输入框中的文本
+      var inputText = document.getElementById('inputText').value;
+      // 获取正则表达式输入框中的文本
+      var regexPattern = document.getElementById('regexPattern').value;
+      // 获取模版输入框中的文本
+      var template = document.getElementById('template').value;
+
+
+
+      var lines = inputText.split("\n");
+      var outStr = "";
+
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        // 处理每一行数据
+        console.log(line);
+        if (!line) {
+          console.log("line empty");
+          continue
+        }
+        var template = document.getElementById('template').value;
+
+        var regex = new RegExp(regexPattern, 'g');
+
+        var result = regex.exec(line);
+        console.log("line" + line + ",regexPattern=" + regexPattern);
+
+        if (!result) {
+          console.log("result empty");
+          continue
+        }
+        console.log(result)
+        for (let index = 0; index < result.length; index++) {
+          console.log(result[index]); // "Hello World"
+          template = template.replace("${" + index + "}", result[index]);
+          console.log(template)
+
+
+        }
+        outStr = outStr + "\n" + template;
+
+      }
+
+
+
+      // 在输出框中展示结果
+      document.getElementById('output').value = outStr;
+    }
+  </script>
+</head>
+
+<body>
+
+
+  <span>正则表达式:</span>
+  <input id="regexPattern" type="text" style="width: 1000px;" VALUE="(\w+) (\w+)">
+  <p>模版:</p>
+  <input id="template" type="text" style="width: 1000px;" value="0=${0},1=${1},2=${2},3=${3}">
+  <button onclick="filterData()">过滤</button>
+
+  <p>输入文本:</p>
+  <textarea id="inputText" rows="10" style="width: 800px;height: 700px;">aa bb</textarea>
+
+
+  <!-- <span>输出结果:</span> -->
+  <textarea id="output" rows="10" style="width: 800px;height: 700px;">输出结果</textarea>
+</body>
+
+</html>

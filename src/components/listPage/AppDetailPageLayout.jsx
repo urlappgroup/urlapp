@@ -8,6 +8,7 @@ const AppDetailPageLayout = () => {
   let location = useLocation();
   let query = new URLSearchParams(location.search);
   let tag = query.get('tag')?query.get('tag'):"";
+  let mark = query.get('mark')?query.get('mark'):"";
   let appId = query.get('appId');
 
   // Find the specific item based on appId
@@ -20,7 +21,7 @@ const AppDetailPageLayout = () => {
 
   return (
     <>
-      <TabBar curTag={tag} />
+      <TabBar curTag={tag}  curMark={mark} />
       <div className="ua-main-content">
         <div className="ua-content-detail">
           {

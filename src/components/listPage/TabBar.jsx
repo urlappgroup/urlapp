@@ -24,15 +24,18 @@ function sortByOrderList(stringList, orderList) {
     return stringList.slice().sort(compareFn);
 }
 
-const TabBar = ({ curTag }) => {
+const TabBar = ({ curTag,curMark }) => {
     const navigate = useNavigate();
     const handleClick = (path) => {
         navigate(path);
     };
     let newTags = [... new Set(allList.map(item => item.tag))]
-    let tagOrder = ["平台说明", "urlapp开发"]
+    let tagOrder = ["文档"]
     let sortedTags = sortByOrderList(newTags, tagOrder)
 
+    let newMarks = [... new Set(allList.filter(item => !curTag || curTag=='all'|| item.tag == curTag).map(item => item.marks))]
+    let marksOrder = []
+    let sortedMarks = sortByOrderList(newMarks, marksOrder)
 
     return (
         <>
@@ -42,16 +45,30 @@ const TabBar = ({ curTag }) => {
                 >
                     全部
                 </li>
-
-
-
-
                 {
                     sortedTags.map((tag) => (
                         <li key={tag} className={tag == curTag ? 'active' : ''}
                             onClick={() => handleClick('/listPage?tag=' + tag)}
                         >
                             {tag}
+                        </li>
+                    ))
+
+
+                }
+            </ul>
+            <ul className="ua-tabs">
+                <li key='all' className={'all' == curMark || !curMark ? 'active' : ''}
+                    onClick={() => handleClick('/listPage?tag='+curTag+"&mark=")}
+                >
+                    全部
+                </li>
+                {
+                    sortedMarks.map((mark) => (
+                        <li key={mark} className={mark == curMark ? 'active' : ''}
+                            onClick={() => handleClick('/listPage?tag=' + curTag+"&mark="+mark)}
+                        >
+                            {mark}
                         </li>
                     ))
 

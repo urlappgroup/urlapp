@@ -1,0 +1,31 @@
+<html>
+<!-- by https://www.v2ex.com/member/Llesue -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>小小记事本</title>
+    <style>
+        * {
+            margin: 0 auto;
+            box-sizing: border-box;
+            color: gray;
+            outline: none;
+            border-radius: 5px;
+        }
+    </style>
+    <script> function copyToClipboard() { var htmlContent = document.documentElement.outerHTML; var tempInput = document.createElement("textarea"); tempInput.style.opacity = 0; tempInput.value = 'data:text/html;charset=utf-8,' + htmlContent; document.body.appendChild(tempInput); tempInput.select(); document.execCommand("copy"); document.body.removeChild(tempInput); alert("已复制"); } </script>
+</head>
+
+<body style="background: gainsboro;">
+    <div style="display: flex; flex-direction: column; max-width: 960px;">
+        <div style="display: flex; width: 100%; margin: 5vh 0 1.5vh;">
+            <div style="flex: 1; font-size: 2em; font-weight: 600; padding-left: 16px; white-space: nowrap;"
+                contenteditable="">编辑标题✏️</div><button onclick="copyToClipboard()"
+                style="border: 1px solid lightgray; padding: 0 20px; cursor: pointer; font-size: 1em;">复制当前页
+                dataUrl</button>
+        </div>
+        <div style="width: 100%; min-height: 50vh; padding: 16px; font-size: 1.2em; border: 1px dashed lightgray; background: whitesmoke; text-align: justify;"
+            contenteditable="">编辑这里开始.✏️</div>
+    </div>
+</body>
+
+</html>

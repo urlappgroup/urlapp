@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaseN Encoder/Decoder</title>
+
+</head>
+
+<body>
+
+    <h2>BaseN Encoder/Decoder</h2>
+    <div> <label>自定义字符集合的编码/解码</label></div>
+    <br>
+    可以试试几个有意思的组合:
+    <br>
+    摩尔斯:._
+    <br>
+    oo:oO
+    <br>
+    emoji:😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗🤔😐😑😶😏😣😥😮🤐😯😪😫😴😌😛😜😝😒😓😔😕🙃🤑😲🙄😳😞😟😠🙁😖😫😩😤
+    <br>
+    乐符:♪♫♩♬
+    <br>
+    音乐:🎙🎤🎧🎵🎶🎷🎸🎹🎺🎻🎼🥁🪐🪑🪒🪓🪔🪕🪖🪗🪘
+    <br>
+    月相:🌑🌒🌓🌔🌕🌖🌗🌘🌙
+    <br>
+    扑克:🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃜🃝🃞
+    <br>
+    象形文字:𓀀𓀁
+    <br>
+    颜色:🟦🟥🟧🟨🟩🟪🟫
+    <br>
+    不可见字符(内含不可见字符,通过全选-复制-粘贴方式帖到字符集):<input value="&#x200B;&#x200C;&#x200D;">
+    <br>
+    <br>
+    最后声明一个分享格式: <br>
+    (字符集)[编码内容] <br>
+    这样未来解码的时候就知道怎么解析了,但不知道的人还是不知道是什么<br>
+    <br>
+    <div>
+        <label for="charSetInput">字符集: 在这里输入字符集,例如“Oo”,输出的编码内容就用这个字符集合表示,2-64字符</label>
+        <input type="text" id="charSetInput"
+            value="𓀀𓀁𓀂𓀃𓀄𓀅𓀆𓀇𓀈𓀉𓀊𓀋𓀌𓀍𓀎𓀏𓀐𓀑𓀒𓀓𓀔𓀕𓀖𓀗𓀘𓀙𓀚𓀛𓀜𓀝𓀞𓀟𓀠𓀡𓀢𓀣𓀤𓀥𓀦𓀧𓀨𓀩𓀪𓀫𓀬𓀭𓀮𓀯𓀰𓀱𓀲𓀳𓀴𓀵𓀶𓀷𓀸𓀹𓀺𓀻𓀼𓀽𓁁𓁂"
+            oninput="updateCharSet()" style="width: 100%;" />
+    </div>
+    <br>
+    <div>
+        <label for="inputString">输入编码内容:(输入内容触发编码)</label>
+        <textarea id="inputString" oninput="encodeToBase64()" placeholder="在这里输入要编码的文本数据,例如-_ Oo ._ 😀😁 (输入后触发转换)"
+            style="width: 100%; height: 100px;"></textarea>
+    </div>
+    <br>
+    <div>
+        <label for="base64String">输入解码内容:(输入编码内容触发解码)</label>
+        <textarea id="base64String" oninput="decodeFromBase64()" placeholder="在这里输入要解码的数据(输入后触发转换)"
+            style="width: 100%; height: 100px;"></textarea>
+    </div>
+
+</body>
+<script>
+    let stringWithSpecialChars = String.fromCodePoint(0x200B) + String.fromCodePoint(0x200C) + String.fromCodePoint(0x200D);
+    var base64Set0 = '=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+    function getUTF8Char(str, index) {
+        let arr = [...str];
+        return arr[index];
+    }
+    function getUTF8Len(str) {
+
+        return [...str].length;
+    }
+    function getUTF8IndexOf(str, cc) {
+        return [...str].indexOf(cc);
+    }
+
+
+    function replaceByCharTable(charSet, base64Set, data) {
+        if (charSet > 64) {
+            charSet = charSet.substring(0, 64);
+        }
+
+
+        let res = "";
+        debugger
+        let length = [...data].length;
+        for (var i = 0; i < length; i++) {
+            res += encodeBaseN(charSet, base64Set, getUTF8Char(data, i));
+
+        }
+        return res;
+    }
+    function replaceBackByCharTable(charSet, base64Set, encodeData) {
+        if (charSet > 64) {
+            charSet = charSet.substring(0, 64);
+        }
+
+
+        let res = "";
+        let dloopiv = regNum(getUTF8Len(charSet), base64Set.length);
+
+        let length = [...encodeData].length;
+
+        for (var i = 0; i < length; i += dloopiv) {
+            let code = decodeBaseN(charSet, base64Set, [...encodeData].slice(i, i + dloopiv).join(""));
+
+            res += getUTF8Char(base64Set, code);
+
+        }
+        return res;
+    }
+    function decodeBaseN(charSet, base64Set, str) {
+        let res = 0;
+        let curUnit = 1;
+        let length = [...str].length;
+
+        for (var i = 0; i < length; i++) {
+            let cc = getUTF8Char(str, i);
+            let code = getUTF8IndexOf(charSet, cc);
+
+            res += curUnit * code;
+            curUnit = curUnit * getUTF8Len(charSet);
+
+        }
+        return res;
+
+    }
+    function encodeBaseN(charSet, base64Set, char) {
+
+        let index = base64Set.indexOf(char);
+        let res = "";
+        let remain = index;
+        let len = getUTF8Len(charSet);
+        let dloopiv = regNum(getUTF8Len(charSet), base64Set.length);
+        for (var i = 0; i < dloopiv; i++) {
+
+            let div = Math.floor(remain / len);
+            let code = remain % len;
+            let cc = getUTF8Char(charSet, code);
+
+            console.log(cc);
+            cc = cc + "";
+            console.log(cc);
+            remain = div;
+            res += cc;
+
+
+        }
+        return res;
+
+    }
+    function regNum(div, num) {
+        let remain = num;
+        let res = 0;
+        while (true) {
+            let nn = Math.floor(remain / div);
+            if (nn > 0) {
+
+                res++;
+                remain = nn;
+                continue;
+            } else
+
+                if (remain % div > 0) {
+
+                    return res + 1;
+                } else {
+                    return res;
+                }
+
+        }
+    }
+
+
+    function encodeToBase64() {
+        var input = document.getElementById("inputString").value;
+        var encoded = btoa(unescape(encodeURIComponent(input)));
+        console.log("from=" + input)
+        console.log("encoded=" + encoded)
+        let charSet = document.getElementById('charSetInput').value;
+
+        encoded = replaceByCharTable(charSet, base64Set0, encoded)
+        console.log("encoded cus=" + encoded)
+
+        document.getElementById("base64String").value = encoded;
+    }
+
+    function decodeFromBase64() {
+        var input = document.getElementById("base64String").value;
+        try {
+            let charSet = document.getElementById('charSetInput').value;
+
+            var input1 = replaceBackByCharTable(charSet, base64Set0, input)
+            console.log("from=" + input)
+            console.log("decoded=" + input1)
+            var decoded = decodeURIComponent(escape(atob(input1)));
+
+            document.getElementById("inputString").value = decoded;
+        } catch (e) {
+            alert('Invalid Base64 string.');
+        }
+    }
+
+    function updateCharSet() {
+        charSet = document.getElementById('charSetInput').value;
+        if (getUTF8Len(charSet) < 2) {
+            return;
+        }
+        encodeToBase64();
+    }
+</script>
+
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL解析与编辑工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 2000px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .column {
+            width: 50%;
+            padding: 10px;
+        }
+
+        .textarea-container textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+
+        }
+
+        .outputColumn textarea {
+            height: 40vh;
+        }
+
+
+        .param-container {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .param-container textarea {
+            flex: 1;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            margin-right: 5px;
+        }
+
+        .key {
+            max-width: 150px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        button.delete {
+            background-color: #f44336;
+        }
+
+        button.delete:hover {
+            background-color: #d32f2f;
+        }
+
+
+        .url-output textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="column">
+            <div class="textarea-container">
+                <strong>协议:</strong>
+                <textarea id="protocolTextarea" rows="1"></textarea>
+            </div>
+            <div class="textarea-container">
+                <strong>域名/IP:</strong>
+                <textarea id="domainTextarea" rows="1"></textarea>
+            </div>
+            <div class="textarea-container">
+                <strong>端口:</strong>
+                <textarea id="portTextarea" rows="1"></textarea>
+            </div>
+            <div class="textarea-container">
+                <strong>Path:</strong>
+                <textarea id="pathTextarea" rows="1"></textarea>
+            </div>
+            <div>
+                <strong>Params:</strong>
+                <button id="addParamButton" class="add">增加param</button>
+
+                <div id="paramsContainer">
+                </div>
+            </div>
+        </div>
+        <div class="column outputColumn">
+            <div class="textarea-container">
+                <strong>输入要处理的URL:</strong>
+                <textarea id="inputUrlTextarea" rows="10">
+                    https://www.baidu.com:80/search?wd=%E7%BE%8E%E9%A3%9F%20%E6%88%90%E8%AF%AD&jsonParam=%7B%22aa%22%3A%20%20%20%20%22bb%22%0A%7D
+                </textarea>
+            </div>
+            <div class="textarea-container">
+                <strong>最终输出的URL:</strong>
+                <div class="url-output">
+                    <textarea id="outputUrlTextarea" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputUrlTextarea = document.getElementById('inputUrlTextarea');
+            const outputUrlTextarea = document.getElementById('outputUrlTextarea');
+            const protocolTextarea = document.getElementById('protocolTextarea');
+            const domainTextarea = document.getElementById('domainTextarea');
+            const portTextarea = document.getElementById('portTextarea');
+            const pathTextarea = document.getElementById('pathTextarea');
+            const paramsContainer = document.getElementById('paramsContainer');
+            const addParamButton = document.getElementById('addParamButton');
+
+            function parseAndUpdateUrl() {
+                const url = inputUrlTextarea.value.trim();
+                if (!url) return;
+
+                const parsedUrl = new URL(url);
+
+                protocolTextarea.value = parsedUrl.protocol.replace(':', '');
+                domainTextarea.value = parsedUrl.hostname;
+                portTextarea.value = parsedUrl.port;
+                pathTextarea.value = parsedUrl.pathname;
+
+                paramsContainer.innerHTML = '';
+
+                parsedUrl.searchParams.forEach((value, key) => {
+                    addParam(key, value);
+                });
+
+                updateOutputUrl();
+            }
+
+            protocolTextarea.addEventListener('input', updateOutputUrl);
+            domainTextarea.addEventListener('input', updateOutputUrl);
+            portTextarea.addEventListener('input', updateOutputUrl);
+            pathTextarea.addEventListener('input', updateOutputUrl);
+
+            inputUrlTextarea.addEventListener('input', function () {
+                parseAndUpdateUrl();
+            });
+
+            addParamButton.addEventListener('click', function () {
+                addParam('', '');
+            });
+
+            function addParam(key, value) {
+                const paramContainer = document.createElement('div');
+                paramContainer.className = 'param-container';
+
+                const keyTextarea = document.createElement('textarea');
+                keyTextarea.className = 'key';
+                keyTextarea.placeholder = '参数名';
+                keyTextarea.value = key;
+                keyTextarea.addEventListener('input', updateOutputUrl);
+                paramContainer.appendChild(keyTextarea);
+
+                const valueTextarea = document.createElement('textarea');
+                valueTextarea.className = 'value';
+                valueTextarea.placeholder = '参数值';
+                valueTextarea.value = value;
+                valueTextarea.addEventListener('input', updateOutputUrl);
+                paramContainer.appendChild(valueTextarea);
+
+                const compressButton = document.createElement('button');
+                compressButton.textContent = 'JSON压缩/美化';
+                compressButton.onclick = function () {
+                    try {
+                        const currentValue = valueTextarea.value.trim();
+                        let parsedValue = JSON.parse(currentValue);
+
+                        const compressedValue = JSON.stringify(parsedValue);
+                        if (currentValue === compressedValue) {
+                            valueTextarea.value = JSON.stringify(parsedValue, null, 2);
+                        } else {
+                            valueTextarea.value = compressedValue;
+                        }
+
+                        updateOutputUrl();
+                    } catch (error) {
+                        alert('无法解析为有效的JSON数据！');
+                    }
+                };
+
+                paramContainer.appendChild(compressButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '删除';
+                deleteButton.className = 'delete';
+                deleteButton.onclick = function () {
+                    paramsContainer.removeChild(paramContainer);
+                    updateOutputUrl();
+                };
+                paramContainer.appendChild(deleteButton);
+
+                paramsContainer.appendChild(paramContainer);
+            }
+
+            function updateOutputUrl() {
+                const protocol = protocolTextarea.value.trim();
+                const domain = domainTextarea.value.trim();
+                const port = portTextarea.value.trim();
+                const path = pathTextarea.value.trim();
+
+                let urlString = protocol ? protocol + '://' : 'http://';
+                urlString += domain ? domain : '';
+                urlString += port ? ':' + port : '';
+                urlString += path ? path : '/';
+
+                const searchParams = [];
+                paramsContainer.querySelectorAll('.param-container').forEach(paramContainer => {
+                    const key = paramContainer.querySelector('.key').value.trim();
+                    const value = paramContainer.querySelector('.value').value.trim();
+                    if (key && value) {
+                        searchParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+                    }
+                });
+
+                if (searchParams.length > 0) {
+                    urlString += '?' + searchParams.join('&');
+                }
+
+                outputUrlTextarea.value = urlString;
+            }
+
+            parseAndUpdateUrl();
+        });
+    </script>
+
+</body>
+
+</html>

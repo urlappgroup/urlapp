@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>变量名生成</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+padding: 20px;
+
+
+}
+input {
+width: 100%;
+margin-bottom: 5px;
+box-sizing: border-box; /* 防止padding和border影响宽高 */
+}
+textarea {
+width: 45vw;
+height: 100vh; /* 调整为占据剩余空间 */
+margin-bottom: 5px;
+box-sizing: border-box; /* 防止padding和border影响宽高 */
+}
+#output {
+width: 45vw;
+
+height: 100vh; /* 调整为占据剩余空间 */
+}
+</style>
+<script>
+function toCamelCase(str) {
+return str.replace(/([-_]\w)/g, (_, match) => match.charAt(1).toUpperCase());
+}
+
+function toPascalCase(str) {
+const camelCase = toCamelCase(str);
+return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+}
+
+function formatVariableNames(input, template) {
+const camel = toCamelCase(input);
+const camelFirstUpper = toPascalCase(input);
+const underline = input.toLowerCase().replace(/-/g, '_');
+const middleline = underline.replace(/_/g, '-');
+const underlineUpper = underline.toUpperCase();
+
+return template
+.replace(/\$\{input\}/g, input)
+.replace(/\$\{camel\}/g, camel)
+.replace(/\$\{camelFirstUpper\}/g, camelFirstUpper)
+.replace(/\$\{underline\}/g, underline)
+.replace(/\$\{middleline\}/g, middleline)
+.replace(/\$\{underlineUpper\}/g, underlineUpper);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+const inputElement = document.getElementById('input');
+const templateElement = document.getElementById('template');
+const outputElement = document.getElementById('output');
+
+function updateOutput() {
+const input = inputElement.value;
+const template = templateElement.value;
+outputElement.value = formatVariableNames(input, template);
+}
+
+inputElement.addEventListener('input', updateOutput);
+templateElement.addEventListener('input', updateOutput);
+});
+</script>
+</head>
+<body>
+<input type="text" id="input" placeholder="Enter variable name (e.g. user_info)" value="user_info">
+<textarea id="template" placeholder="Enter your template here...">
+输入=${input}
+
+驼峰首字母小写=${camel}
+驼峰首字母大写=${camelFirstUpper}
+下划线小写=${underline}
+下划线大写=${underlineUpper}
+中横线小写=${middleline}
+
+get${camelFirstUpper}();
+set${camelFirstUpper}(${camel});
+
+${camelFirstUpper}Service
+${camelFirstUpper}ServiceImpl
+${camelFirstUpper}DTO
+${camelFirstUpper}DO
+${camelFirstUpper}PO
+
+${camelFirstUpper}ServiceImpl
+I${camelFirstUpper}Service
+
+
+I${camelFirstUpper}QueryService
+I${camelFirstUpper}UpdateService
+
+
+${camelFirstUpper}ServiceImpl
+${camelFirstUpper}Service
+
+
+
+${camelFirstUpper}DAO
+${camel}DAO
+
+
+
+
+
+
+
+
+{
+"camel":"${camel}",
+"camelFirstUpper":"${camelFirstUpper}",
+"underline":"${underline}",
+"underlineUpper":"${underlineUpper}",
+"underlineUpper":"${underlineUpper}",
+"middleline":"${middleline}",
+
+"className":"${camelFirstUpper}",
+"varName":"${camel}",
+"const":"${underlineUpper}",
+"packageName":"${underline}",
+
+
+"author":"qixing.zbw@alibaba-inc.com",
+"date":"2024/2/29"
+}
+
+
+
+</textarea>
+<textarea id="output" placeholder="Formatted variable names will appear here..." readonly></textarea>
+</body>
+</html>

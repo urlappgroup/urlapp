@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+
+<body style="margin: 0; height: 100vh">
+    <div id="container" style="width: 100%; height: 100%"></div>
+    <script type="text/javascript" src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+    <script>
+        require.config({
+            paths: {
+                vs: "https://unpkg.com/monaco-editor@latest/min/vs"
+            }
+        });
+        require(["vs/editor/editor.main"],
+            function () {
+                monaco.editor.create(document.getElementById("container"), {
+                    language: "json",
+                    theme: "vs-dark",
+                });
+            });
+    </script>
+</body>
+
+</html>
