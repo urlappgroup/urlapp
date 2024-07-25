@@ -273,22 +273,6 @@
         "weight": 1
     },
     {
-        "title": "俄罗斯方块",
-        "desc": "转载自https://js1k.com/2019-x/demo/4076\n俄罗斯方块\n左右下按键移动,z键旋转",
-        "tag": "游戏",
-        "marks": "小游戏",
-        "fileName": "cube.html",
-        "appDocName": "",
-        "userName": "js1k",
-        "userEmail": "",
-        "version": "v1.0.0",
-        "license": "Apache-2.0",
-        "appId": "app2024072200014",
-        "updateTime": 1715235441515,
-        "createTime": 1715235441515,
-        "weight": 1
-    },
-    {
         "title": "马里奥1k",
         "desc": "转载自https://js1k.com/2013-spring/demo/1365\n模拟经典马里奥游戏",
         "tag": "游戏",
@@ -671,6 +655,22 @@
         "version": "v1.0.0",
         "license": "Apache-2.0",
         "appId": "app2024072500021",
+        "updateTime": 1715235441515,
+        "createTime": 1715235441515,
+        "weight": 90
+    },
+    {
+        "title": "扫雷js版本",
+        "desc": "移植自https://github.com/aymanbagabas/jsminesweeper\n很不错简洁的实现",
+        "tag": "游戏",
+        "marks": "经典",
+        "fileName": "jsminesweeper.html",
+        "appDocName": "",
+        "userName": "aymanbagabas",
+        "userEmail": "",
+        "version": "v1.0.0",
+        "license": "Apache-2.0",
+        "appId": "app2024072500022",
         "updateTime": 1715235441515,
         "createTime": 1715235441515,
         "weight": 90

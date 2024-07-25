@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>JSMinsweeper</title>
+        <style>
+            canvas { background: red; }
+            body { text-align: center; }
+        </style>
+    </head>
+    <body>
+            <h1>JSMinesweeper</h1><br>
+            Select difficulty:
+            <select id="menu" name="menu" onchange="menu()">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+              <option value="custom">Custom</option>
+            </select><br>
+            <br>
+            Columns: <input id="cols" name="cols" type="text" size="2" disabled>
+            Rows: <input id="rows" name="rows" type="text" size="2" disabled>
+            Mines: <input id="mines" name="mines" type="text" size="2" disabled>
+            <br><br>
+            <p>Left click:<br>
+
+                * Within the grid it reveals a square.<br>
+                * Otherwise starts a new game. <br>
+
+            Right click marks a square within the grid.</p><br>
+            <br>
+            <button onclick="start(document.getElementById('menu'))">Start Game</button>
+    </body>
+    <!-- <script src="jsminesweeper.js"></script> -->
+    <script language="JavaScript">
+winJs='\n    \x3Cscript  >\n\n// constants\nvar c = 30;\nvar xo = 0;\nvar yo = 0;\nvar size = {};\nvar numberofmines = 0;\nvar timer = 0;\nvar gametimer = null;\nvar end = false;\nvar win = false;\n\nfunction getMousePos(canvas, evt) {\n    var rect = canvas.getBoundingClientRect();\n    return {\n        x: evt.clientX - rect.left,\n        y: evt.clientY - rect.top\n    };\n}\n\n// Init\nfunction init() {\n    canvas = document.getElementById("jsminesweeper");\n    canvas.addEventListener("contextmenu", function(evt) {\n        if (evt.button == 2) evt.preventDefault();\n    });\n    canvas.addEventListener("mousedown", function (evt) {\n        var mousePos = getMousePos(canvas, evt);\n        var i = Math.floor((mousePos.x - xo)/c);\n        var j = Math.floor((mousePos.y - yo)/c);\n        console.log(mousePos);\n        console.log(i+ " " + j);\n\n        if (i >= 0 && j >= 0) {\n            if (gametimer === null && !end) {\n                gametimer = setInterval(function () {\n                    timer++;\n                    win = checkGame();\n                    if (win) {\n                        end = true;\n                    }\n                    updateHeader();\n                }, 1000);\n            }\n            var mine = mines[i][j];\n            if (evt.button == 2) {\n                if (!mine.isDown) {\n                    if (numberofmines != 0 || mine.isFlagged)\n                      mine.isFlagged = !mine.isFlagged;\n                }\n            } else {\n                click(i, j);\n            }\n\n            update();\n        } else {\n            clearInterval(gametimer);\n            numberofmines = 0;\n            gametimer = null;\n            timer = 0;\n            end = false;\n            ctx.clearRect(0, 0, canvas.width, canvas.height);\n            jsminesweeper(size.w, size.h, size.m);\n            console.log(evt);\n        }\n    }, false);\n    ctx = canvas.getContext("2d");\n}\n\nfunction click(x, y) {\n    mine = mines[x][y];\n    if (!mine.isFlagged) {\n        mine.isDown = true;\n        if (mine.isMine) {\n            end = true;\n            updateHeader();\n        }\n        if (mine.weight == 0) {\n            var neighbors = [];\n            if (x != 0) neighbors.push(mines[x-1][y]); // top\n            if (y != 0) neighbors.push(mines[x][y-1]); // left\n            if (x != size.w-1) neighbors.push(mines[x+1][y]); // bottom\n            if (y != size.h-1) neighbors.push(mines[x][y+1]); // right\n            if (x != 0 && y != size.h-1) neighbors.push(mines[x-1][y+1]); // top right\n            if (x != 0 && y != 0) neighbors.push(mines[x-1][y-1]); // top left\n            if (x != size.w-1 && y != size.h-1) neighbors.push(mines[x+1][y+1]); // bottom right\n            if (x != size.w-1 && y != 0) neighbors.push(mines[x+1][y-1]); // bottom left\n            for(m in neighbors) {\n                var n = neighbors[m];\n                if (!n.isDown && !n.isMine && !n.isFlagged) {\n                    click(n.x, n.y);\n                    n.isDown = true;\n                }\n            }\n        }\n    }\n}\n\n// Game\nfunction jsminesweeper(width, height, num) {\n\n    numberofmines = num;\n\n    size.w = width;\n    size.h = height;\n    size.m = num;\n\n    // draw game\n    drawGame(size.w, size.h);\n    // mines\n    mines = new Array(size.w);\n    for (var i = 0; i < size.w; i++) {\n        mines[i] = new Array(size.h);\n        for (var j = 0; j < size.h; j++) {\n            mines[i][j] = new Mine(i, j);\n            drawMine(i, j);\n        }\n    }\n    \n    // set random mines\n    for (var i = 0; i < size.m; i++) {\n        var x = Math.floor(Math.random() * size.w);\n        var y = Math.floor(Math.random() * size.h);\n        if (mines[x][y].isMine) {\n            i--;\n            continue;\n        } else {\n            mines[x][y].isMine = true;\n            if (x != 0) mines[x-1][y].weight++; // top\n            if (y != 0) mines[x][y-1].weight++; // left\n            if (x != size.w-1) mines[x+1][y].weight++; // bottom\n            if (y != size.h-1) mines[x][y+1].weight++; // right\n            if (x != 0 && y != size.h-1) mines[x-1][y+1].weight++; // top right\n            if (x != 0 && y != 0) mines[x-1][y-1].weight++; // top left\n            if (x != size.w-1 && y != size.h-1) mines[x+1][y+1].weight++; // bottom right\n            if (x != size.w-1 && y != 0) mines[x+1][y-1].weight++; // bottom left\n        }\n    }\n}\n\nfunction update() {\n    ctx.clearRect(xo, yo, size.w*c, size.h*c);\n    // mines\n    for (var i = 0; i < size.w; i++) {\n        for (var j = 0; j < size.h; j++) {\n            if (end) mines[i][j].isDown = true;\n            drawMine(i, j);\n        }\n    }\n}\n\nfunction updateHeader() {\n    if (end) {\n        clearInterval(gametimer);\n        gametimer = null;\n        update();\n        if (win) alert("You won!");\n        else alert("You lost!");\n    }\n    ctx.clearRect(xo, yo-(2*c), c*size.w, 2*c);\n    header(c*size.w, 2*c);\n}\n\nfunction checkGame() {\n    for(var i = 0; i < size.w; i++) {\n        for(var j = 0; j < size.h; j++) {\n            if (!mines[i][j].isDown && !mines[i][j].isMine) {\n                return false;\n            }\n        }\n    }\n    return true;\n}\n\nfunction drawGame(width, height) {\n    var w = c * width + 20;\n    var h = c * height + 2*c + 20;\n    ctx.beginPath();\n    ctx.fillStyle = "#C0CfC5";\n    ctx.rect(0, 0, w, h);\n    ctx.fill();\n    ctx.closePath();\n    xo = 10;\n    yo = 2*c+10;\n    header(c*width, 2*c);\n}\n\nfunction drawMine(i, j) {\n    var mine = mines[i][j];\n    var x = c * i + xo;\n    var y = c * j + yo;\n    ctx.beginPath();\n    ctx.fillStyle = "#808080";\n    ctx.rect(x, y, c, c);\n    ctx.fill();\n    ctx.closePath();\n    ctx.beginPath();\n    if (mine.isDown) {\n        if (mine.isMine)\n            ctx.fillStyle = "red";\n        else\n            ctx.fillStyle = "white";\n    } else {\n        ctx.fillStyle = "#C0C0C0"\n    }\n    ctx.rect(x+2, y+2, c-3, c-3);\n    ctx.fill();\n    ctx.closePath();\n    if (mine.isFlagged && !mine.isDown) {\n        ctx.beginPath();\n        ctx.fillStyle = "black";\n        ctx.font = "27px monospace";\n        ctx.textAlign = "center";\n        ctx.fillText("!", x+(c/2), y+c);\n        ctx.closePath();\n    }\n    if (mine.isDown && !mine.isMine) {\n        ctx.beginPath();\n        ctx.fillStyle = "black";\n        ctx.font = "27px monospace";\n        ctx.textAlign = "center";\n        ctx.fillText((mine.weight == 0) ? "": mine.weight, x+(c/2), y+c-5);\n        ctx.closePath();\n    }\n}\n\nfunction header(width, height) {\n    // header\n    ctx.beginPath();\n    ctx.rect(xo, yo-height, width, height);\n    ctx.fillStyle = "#C0CfC5";\n    ctx.fill();\n    ctx.closePath();\n\n    // mine counter\n    ctx.beginPath();\n    ctx.rect(xo+10, yo-c-(c/2), 2*c, c);\n    ctx.fillStyle = "black";\n    ctx.fill();\n    ctx.font = "27px monospace";\n    ctx.fillStyle = "red";\n    ctx.textAlign = "center";\n    ctx.fillText(numberofmines, xo+c+10, yo-(height/2)+10)\n    ctx.closePath();\n\n    // start button\n    ctx.beginPath();\n    ctx.fillStyle = "black";\n    ctx.rect(xo+(width/2)-(c/2), yo-(height/2)-(c/2), c, c);\n    ctx.fill();\n    ctx.fillStyle = "red";\n    ctx.font = "27px sans";\n    ctx.textAlign = "center";\n    ctx.fillText((end && !win) ? String.fromCharCode("9785"): String.fromCharCode("9786"), xo+(width/2), yo-(height/2)+10);\n    ctx.closePath();\n\n    // timer\n    ctx.beginPath();\n    ctx.rect(xo-10+width-(c*2), yo-c-(c/2), 2*c, c);\n    ctx.fillStyle = "black";\n    ctx.fill();\n    ctx.font = "27px monospace";\n    ctx.textAlign = "center";\n    ctx.fillStyle = "red";\n    ctx.fillText(timer,xo+width-(2*c)+20, yo-(c/2)-5)\n    ctx.closePath();\n}\n\n// mine object\nclass Mine {\n    constructor(x, y) {\n        this.x = x;\n        this.y = y;\n        this.isDown = false;\n        this.isMine = false;\n        this.isDown = false;\n        //this.isFlagged = false;\n        this.weight = 0;\n    }\n    get x() { return this._x; }\n    set x(value) { this._x = value; }\n    get y() { return this._y; }\n    set y(value) { this._y = value; }\n    get weight() { return this._weight; }\n    set weight(value) { this._weight = value; }\n    get isDown() { return this._isDown; }\n    set isDown(value) {\n        this._isDown = value;\n        if (this.isMine) {\n            end = true;\n        }\n    }\n    get isMine() { return this._isMine; }\n    set isMine(value) { this._isMine = value; }\n    get isFlagged() { return this._isFlagged; }\n    set isFlagged(value) {\n        this._isFlagged = value;\n        if (value)\n            numberofmines = (numberofmines <= 0) ? 0: numberofmines - 1;\n        else\n            numberofmines++;\n        updateHeader();\n    }\n}\n\n\n\n\x3C/script>'
+
+    
+	  var gamewindow;
+      function menu() {
+          var elem = document.getElementById('menu');
+          if (elem.options[elem.selectedIndex].value == "custom") {
+              document.getElementById("cols").disabled = false;
+              document.getElementById("rows").disabled = false;
+              document.getElementById("mines").disabled = false;
+          } else {
+              document.getElementById("cols").disabled = true;
+              document.getElementById("rows").disabled = true;
+              document.getElementById("mines").disabled = true;
+          }
+      }
+      function start(elem) {
+          var cols = 0;
+          var rows = 0;
+          var mines = 0;
+          var d = elem.options[elem.selectedIndex].value;
+          switch(d) {
+              case "easy":
+                  cols = rows = 9; mines = 11;
+                  break;
+              case "medium":
+                  cols = rows = 16; mines = 40;
+                  break;
+              case "hard":
+                  cols = 16; rows = 30; mines = 99;
+                  break;
+              default:
+                  cols = document.getElementById("cols").value;
+                  rows = document.getElementById("rows").value;
+                  mines = document.getElementById("mines").value;
+          }
+          width = (30*cols) + 20;
+          height = (30*rows) + 80;
+          windowFeatures = 'toolbar=no, location=no, directories=no, status=no, menubar=no, titlebar=no, scrollbars=no, resizable=no, ';
+          page = "<!DOCTYPE html><html><head>"+winJs+"</sc"+"ript><meta charset='UTF-8' />"
+          + "<meta name='viewport' content='width=device-width' /><title>JSMinesweeper</title><style>body{margin:0;padding:0;overflow-x:hidden;overflow-y:hidden;}canvas{background:grey;}</style></head>"
+          + "<body><canvas id='jsminesweeper' width='"+ width +"' height='"+ height +"' ></canvas></body>"
+		  + "<script>function start() { init(); jsminesweeper("+cols+","+rows+","+mines+"); }; window.onload = start();</sc"+"ript></html>";
+		  if (gamewindow) {
+			  gamewindow.close();
+		  }
+          gamewindow = window.open('', "JSMinesweeper", windowFeatures + "width="+(width)+", height="+(height));
+		  gamewindow.document.write(page);
+		  gamewindow.document.close();
+          gamewindow.focus();
+      }
+    </script>
+</html>
