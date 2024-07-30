@@ -1,0 +1,18 @@
+[
+    {
+        "title": "二维码扫描",
+        "desc": "扫描二维码并打开（只支持移动端）",
+        "tag": "在线工具",
+        "marks": "二维码",
+        "fileName": "scanQRCode.html",
+        "appDocName": "",
+        "userName": "meepo",
+        "userEmail": "urlappgroup@gmail.com",
+        "version": "v1.0.0",
+        "license": "Apache-2.0",
+        "appId": "app2024072200005",
+        "updateTime": 1721649383000,
+        "createTime": 1721649383000,
+        "weight": 1
+    }
+]

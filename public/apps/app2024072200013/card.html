@@ -78,8 +78,124 @@
     </header>
 
     <script type="demo">
-for(_='0<O=fNy[IIm]H&&GG(F],E);D":"#3)};=[]>>2)c[c.==0,=w[m].length1=-r<m&!f&O=.splice(t,s=t;"#797"a.width=h.page]=GH--for(	Di(hid>>2|d%onmouse).reverse()):(h,d,1(b-(d.push.apply(Nunctionb,f,A){	f in c)c[f[0]+f[6]f;s;w=[u,v];y;I1x=3;Kfyb%2?"#e4233"sSb?f?"#ffe68":sB40sR]465)sB0;b&fGfx](("JQKA"[(f=b?f-10:3]||f+1)+"♠♦♣♥"[b%4Eh-5,d+10D!A&h-2On&n<h+60&d-2Op&p<d+85Fr=J,m=x,e=h,g=d	B	fN||0;f<b;f++,bv?h+=47:d+=A?30:20)Kb[JNEA=A|bs||f>=IxEbs52>u;u10*Math.random(),u)D	;14>x;)w[x++u7>x?0:Ixx-7)sC"rgba(0.2)";c.font="21px Tahoma"ld40li"round";uptFmFd=s[0Ef,b[f-1EOs&6122!=b%2&|1s&7>m&204b%4&-Ft)),tt,s0)),tvGI1]++=movenX;pYfyfc](,a.heightDr=mN;	x in w)h=/2-305+x%7*95,d=6<x?200:6b=w[xEb?6<x?Bb):Bb,b-(Ix]||1),Ox):x^1GB[A]DsGB(n-C,p-l,sdowntN;rFC=n-e,l=p-gD6<m?r>=H?(r))::0m?u?vv,u-(I13)uu,v0mGFH,-1)(0D';G=/[-D-INO]/.exec(_);)with(_.split(G))_=join(shift());eval(_)
-    </script>
+
+      
+      const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 465;
+canvas.height = 320;
+
+const suits = ['♠', '♦', '♣', '♥'];
+const values = ['J', 'Q', 'K', 'A'];
+
+let deck = [];
+let playerHand = [];
+let computerHand = [];
+let currentCard = null;
+let isPlayerTurn = true;
+
+function initializeDeck() {
+    for (let suit = 0; suit < 4; suit++) {
+        for (let value = 1; value <= 13; value++) {
+            deck.push({
+                suit: suit,
+                value: value
+            });
+        }
+    }
+}
+
+function shuffleDeck() {
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+}
+
+function dealCards() {
+    playerHand = deck.splice(0, 7);
+    computerHand = deck.splice(0, 7);
+    currentCard = deck.pop();
+}
+
+function drawCard(card, x, y, isFaceUp) {
+    ctx.fillStyle = isFaceUp ? (card.suit % 2 ? "#e42334" : "#000") : "#797";
+    ctx.fillRect(x, y, 60, 85);
+    
+    if (isFaceUp) {
+        ctx.fillStyle = "#fff";
+        ctx.font = "21px Tahoma";
+        let cardValue = card.value > 10 ? values[card.value - 11] : card.value;
+        ctx.fillText(cardValue + suits[card.suit], x + 5, y + 25);
+    }
+}
+
+function drawHands() {
+    playerHand.forEach((card, index) => {
+        drawCard(card, 10 + index * 65, 200, true);
+    });
+    
+    computerHand.forEach((card, index) => {
+        drawCard(card, 10 + index * 65, 10, false);
+    });
+    
+    drawCard(currentCard, 200, 100, true);
+}
+
+function canPlayCard(card) {
+    return card.suit === currentCard.suit || card.value === currentCard.value;
+}
+
+function playCard(card) {
+    if (canPlayCard(card)) {
+        currentCard = card;
+        isPlayerTurn = !isPlayerTurn;
+        return true;
+    }
+    return false;
+}
+
+function computerPlay() {
+    for (let card of computerHand) {
+        if (playCard(card)) {
+            computerHand = computerHand.filter(c => c !== card);
+            break;
+        }
+    }
+    if (isPlayerTurn) {
+        computerHand.push(deck.pop());
+    }
+}
+
+canvas.addEventListener('mousedown', (event) => {
+    if (isPlayerTurn) {
+        const x = event.clientX - canvas.offsetLeft;
+        const y = event.clientY - canvas.offsetTop;
+        const cardIndex = Math.floor((x - 10) / 65);
+        
+        if (cardIndex >= 0 && cardIndex < playerHand.length && y > 200) {
+            const selectedCard = playerHand[cardIndex];
+            if (playCard(selectedCard)) {
+                playerHand.splice(cardIndex, 1);
+                if (playerHand.length === 0) {
+                    alert("You win!");
+                } else {
+                    computerPlay();
+                }
+            }
+        }
+    }
+    drawHands();
+});
+
+initializeDeck();
+shuffleDeck();
+dealCards();
+drawHands();
+
+
+
+</script>
     <script>
       (function(){var m=document,b=m.getElementsByTagName("header")[0],h=b.firstChild,n=m.getElementsByClassName("p")[0],f=m
       .getElementsByClassName("n")[0];b.insertBefore(n,h);b.insertBefore(f,h);b.appendChild(m.getElementsByTagName("p")[0])}

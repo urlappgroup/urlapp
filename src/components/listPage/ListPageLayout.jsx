@@ -18,7 +18,7 @@ const ListPageLayout = () => {
     if (a.weight == b.weight) {
       return b.updateTime - a.updateTime
     } else {
-      return a.weight - b.weight
+      return b.weight - a.weight
     }
   });
 
