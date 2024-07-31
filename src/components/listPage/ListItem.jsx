@@ -107,6 +107,7 @@ const ListItem = ({ itemData,showType="list" }) => {
         {itemData.userName}
         &nbsp;· {formatDateTime(itemData.updateTime)}
         &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
+        &nbsp;· <a class="ua-run-button" href="#" onClick={() => openAppHtml()} ><div class="ua-play-icon"></div>运行</a>
         &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制urlapp</a> 
         &nbsp;· {itemData.appDocName && <a href="#" onClick={() => openAppDetailPage()} >使用说明</a>}
         &nbsp;· <a href={appUrl} download={itemData.title}>下载</a>
