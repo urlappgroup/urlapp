@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy Random Avatar Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        canvas {
+            border: 3px solid #000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="avatarCanvas" width="300" height="300"></canvas>
+        <br>
+        <button onclick="generateAvatar()">Generate Crazy Avatar!</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('avatarCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function generateRandomColor() {
+            return `hsl(${Math.random() * 360}, ${50 + Math.random() * 50}%, ${50 + Math.random() * 50}%)`;
+        }
+
+        function drawShape(x, y, sides, size, color) {
+            ctx.beginPath();
+            ctx.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+            for (let i = 1; i <= sides; i++) {
+                ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides), y + size * Math.sin(i * 2 * Math.PI / sides));
+            }
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        function drawEye(x, y, size, style) {
+            const eyeColor = generateRandomColor();
+            const pupilColor = generateRandomColor();
+            if (style === 'crazy') {
+                drawShape(x, y, Math.floor(Math.random() * 5) + 3, size, eyeColor);
+                drawShape(x, y, Math.floor(Math.random() * 5) + 3, size / 2, pupilColor);
+            } else if (style === 'swirl') {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                for (let i = 0; i < 20; i++) {
+                    const angle = 0.1 * i;
+                    const dx = (1 + angle) * Math.cos(angle);
+                    const dy = (1 + angle) * Math.sin(angle);
+                    ctx.lineTo(x + size * dx, y + size * dy);
+                }
+                ctx.fillStyle = eyeColor;
+                ctx.fill();
+                drawShape(x, y, Math.floor(Math.random() * 5) + 3, size / 3, pupilColor);
+            }
+        }
+
+        function drawMouth(x, y, width, height, style) {
+            const mouthColor = generateRandomColor();
+            if (style === 'zigzag') {
+                ctx.beginPath();
+                ctx.moveTo(x - width / 2, y);
+                for (let i = 0; i < 10; i++) {
+                    ctx.lineTo(x - width / 2 + (i + 1) * width / 10, y + (i % 2 === 0 ? height : -height));
+                }
+                ctx.strokeStyle = mouthColor;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            } else if (style === 'spiral') {
+                ctx.beginPath();
+                for (let i = 0; i < 50; i++) {
+                    const angle = 0.5 * i;
+                    const x1 = x + (width / 2 * Math.cos(angle) * (1 - angle / 10));
+                    const y1 = y + (height / 2 * Math.sin(angle) * (1 - angle / 10));
+                    ctx.lineTo(x1, y1);
+                }
+                ctx.strokeStyle = mouthColor;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+        }
+
+        function drawHair() {
+            const hairColor = generateRandomColor();
+            ctx.fillStyle = hairColor;
+            for (let i = 0; i < 100; i++) {
+                const angle = Math.random() * Math.PI;
+                const length = Math.random() * 50 + 50;
+                const startX = 150 + 100 * Math.cos(angle);
+                const startY = 100 + 100 * Math.sin(angle);
+                const endX = startX + length * Math.cos(angle);
+                const endY = startY + length * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.lineWidth = Math.random() * 3 + 1;
+                ctx.stroke();
+            }
+        }
+
+        function drawAccessory() {
+            const accessoryType = Math.random();
+            const color = generateRandomColor();
+            if (accessoryType < 0.33) {
+                // Crown
+                ctx.fillStyle = color;
+                for (let i = 0; i < 5; i++) {
+                    drawShape(60 + i * 45, 50, 3, 20, color);
+                }
+            } else if (accessoryType < 0.66) {
+                // Antenna
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(150, 50);
+                ctx.quadraticCurveTo(100, 0, 50, 50);
+                ctx.moveTo(150, 50);
+                ctx.quadraticCurveTo(200, 0, 250, 50);
+                ctx.stroke();
+                drawShape(50, 50, 8, 10, color);
+                drawShape(250, 50, 8, 10, color);
+            } else {
+                // Halo
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 5;
+                ctx.beginPath();
+                ctx.ellipse(150, 70, 70, 30, 0, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+        }
+
+        function applyFilter() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const brightness = Math.random() * 0.4 + 0.8;
+                data[i] *= brightness;
+                data[i + 1] *= brightness;
+                data[i + 2] *= brightness;
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function generateAvatar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background
+            const gradient = ctx.createRadialGradient(150, 150, 10, 150, 150, 300);
+            gradient.addColorStop(0, generateRandomColor());
+            gradient.addColorStop(1, generateRandomColor());
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Face
+            const faceColor = generateRandomColor();
+            drawShape(150, 150, Math.floor(Math.random() * 5) + 3, 120, faceColor);
+
+            // Hair
+            drawHair();
+
+            // Eyes
+            const eyeStyle = Math.random() > 0.5 ? 'crazy' : 'swirl';
+            const eyeSize = Math.random() * 20 + 10;
+            drawEye(100, 120, eyeSize, eyeStyle);
+            drawEye(200, 120, eyeSize, eyeStyle);
+
+            // Mouth
+            const mouthStyle = Math.random() > 0.5 ? 'zigzag' : 'spiral';
+            const mouthWidth = Math.random() * 60 + 40;
+            const mouthHeight = Math.random() * 20 + 10;
+            drawMouth(150, 200, mouthWidth, mouthHeight, mouthStyle);
+
+            // Accessory
+            if (Math.random() > 0.3) {
+                drawAccessory();
+            }
+
+            // Apply filter
+            applyFilter();
+        }
+
+        // Generate initial avatar
+        generateAvatar();
+    </script>
+</body>
+</html>

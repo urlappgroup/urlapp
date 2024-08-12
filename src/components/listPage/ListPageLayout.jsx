@@ -48,8 +48,8 @@ const ListPageLayout = () => {
                 if (searchKey) {
                   return checkMatch(searchKey, item);
                 }
-                console.log(item && item.tag == tag && item.marks == mark)
-                console.log(item.tag, item.marks, tag, mark)
+                // console.log(item && item.tag == tag && item.marks == mark)
+                // console.log(item.tag, item.marks, tag, mark)
 
                 return item 
                 && (!tag || tag == 'all' ||item.tag == tag )
@@ -57,9 +57,9 @@ const ListPageLayout = () => {
 
               })
               .map((item) => {
-                console.log("aa",item.tag, item.marks, tag, mark)
+                // console.log("aa",item.tag, item.marks, tag, mark)
 
-                return <ListItem key={item.fileName} itemData={item} />
+                return <ListItem key={item.appId} itemData={item} />
 
               }
 

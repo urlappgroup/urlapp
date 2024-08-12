@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Avatar Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        canvas {
+            border: 3px solid #000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transition: all 0.5s;
+        }
+        canvas:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="avatarCanvas" width="300" height="300"></canvas>
+        <br>
+        <button onclick="generateAvatar()">Generate Cool Avatar!</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('avatarCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function generateRandomColor() {
+            return `hsl(${Math.random() * 360}, ${50 + Math.random() * 50}%, ${50 + Math.random() * 50}%)`;
+        }
+
+        function drawFace() {
+            const faceShapes = [
+                () => ctx.ellipse(150, 150, 100, 120, 0, 0, 2 * Math.PI),
+                () => ctx.rect(50, 30, 200, 240),
+                () => {
+                    ctx.moveTo(150, 30);
+                    ctx.lineTo(250, 150);
+                    ctx.lineTo(150, 270);
+                    ctx.lineTo(50, 150);
+                    ctx.closePath();
+                }
+            ];
+            const faceColor = generateRandomColor();
+            ctx.fillStyle = faceColor;
+            ctx.beginPath();
+            faceShapes[Math.floor(Math.random() * faceShapes.length)]();
+            ctx.fill();
+        }
+
+        function drawEyes() {
+            const eyeTypes = [
+                () => {
+                    ctx.ellipse(110, 120, 25, 20, 0, 0, 2 * Math.PI);
+                    ctx.ellipse(190, 120, 25, 20, 0, 0, 2 * Math.PI);
+                },
+                () => {
+                    ctx.rect(85, 100, 50, 40);
+                    ctx.rect(165, 100, 50, 40);
+                },
+                () => {
+                    ctx.moveTo(85, 120);
+                    ctx.lineTo(135, 100);
+                    ctx.lineTo(135, 140);
+                    ctx.closePath();
+                    ctx.moveTo(165, 120);
+                    ctx.lineTo(215, 100);
+                    ctx.lineTo(215, 140);
+                    ctx.closePath();
+                }
+            ];
+            const eyeColor = generateRandomColor();
+            const pupilColor = generateRandomColor();
+
+            ctx.fillStyle = eyeColor;
+            ctx.beginPath();
+            eyeTypes[Math.floor(Math.random() * eyeTypes.length)]();
+            ctx.fill();
+
+            ctx.fillStyle = pupilColor;
+            ctx.beginPath();
+            ctx.arc(110, 120, 10, 0, 2 * Math.PI);
+            ctx.arc(190, 120, 10, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawMouth() {
+            const mouthTypes = [
+                () => ctx.ellipse(150, 200, 40, 20, 0, 0, Math.PI),
+                () => ctx.rect(110, 190, 80, 20),
+                () => {
+                    ctx.moveTo(110, 200);
+                    ctx.quadraticCurveTo(150, 240, 190, 200);
+                }
+            ];
+            const mouthColor = generateRandomColor();
+            ctx.fillStyle = mouthColor;
+            ctx.beginPath();
+            mouthTypes[Math.floor(Math.random() * mouthTypes.length)]();
+            ctx.fill();
+        }
+
+        function drawNose() {
+            const noseTypes = [
+                () => ctx.ellipse(150, 160, 10, 15, 0, 0, 2 * Math.PI),
+                () => {
+                    ctx.moveTo(150, 140);
+                    ctx.lineTo(140, 170);
+                    ctx.lineTo(160, 170);
+                    ctx.closePath();
+                },
+                () => ctx.rect(145, 145, 10, 30)
+            ];
+            const noseColor = generateRandomColor();
+            ctx.fillStyle = noseColor;
+            ctx.beginPath();
+            noseTypes[Math.floor(Math.random() * noseTypes.length)]();
+            ctx.fill();
+        }
+
+        function drawHair() {
+            const hairTypes = [
+                () => {
+                    ctx.moveTo(50, 150);
+                    ctx.quadraticCurveTo(150, 0, 250, 150);
+                    ctx.lineTo(250, 100);
+                    ctx.quadraticCurveTo(150, -50, 50, 100);
+                    ctx.closePath();
+                },
+                () => {
+                    ctx.rect(50, 30, 200, 80);
+                    ctx.moveTo(50, 110);
+                    ctx.lineTo(30, 200);
+                    ctx.moveTo(250, 110);
+                    ctx.lineTo(270, 200);
+                },
+                () => {
+                    ctx.moveTo(150, 30);
+                    ctx.lineTo(50, 150);
+                    ctx.lineTo(250, 150);
+                    ctx.closePath();
+                }
+            ];
+            const hairColor = generateRandomColor();
+            ctx.fillStyle = hairColor;
+            ctx.beginPath();
+            hairTypes[Math.floor(Math.random() * hairTypes.length)]();
+            ctx.fill();
+        }
+
+        function drawAccessory() {
+            const accessoryTypes = [
+                () => {
+                    ctx.strokeStyle = generateRandomColor();
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.ellipse(110, 120, 30, 25, 0, 0, 2 * Math.PI);
+                    ctx.moveTo(140, 120);
+                    ctx.lineTo(160, 120);
+                    ctx.ellipse(190, 120, 30, 25, 0, 0, 2 * Math.PI);
+                    ctx.stroke();
+                },
+                () => {
+                    ctx.fillStyle = generateRandomColor();
+                    ctx.beginPath();
+                    ctx.ellipse(150, 60, 80, 30, 0, 0, Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.ellipse(150, 60, 50, 20, 0, Math.PI, 2 * Math.PI);
+                    ctx.fill();
+                },
+                () => {
+                    ctx.fillStyle = generateRandomColor();
+                    ctx.beginPath();
+                    ctx.arc(50, 150, 10, 0, 2 * Math.PI);
+                    ctx.arc(250, 150, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            ];
+            accessoryTypes[Math.floor(Math.random() * accessoryTypes.length)]();
+        }
+
+        function generateAvatar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const gradient = ctx.createRadialGradient(150, 150, 10, 150, 150, 300);
+            gradient.addColorStop(0, generateRandomColor());
+            gradient.addColorStop(1, generateRandomColor());
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawHair();
+            drawFace();
+            drawEyes();
+            drawNose();
+            drawMouth();
+            drawAccessory();
+
+            canvas.style.filter = `hue-rotate(${Math.random() * 360}deg) saturate(${100 + Math.random() * 100}%)`;
+        }
+
+        generateAvatar();
+    </script>
+</body>
+</html>

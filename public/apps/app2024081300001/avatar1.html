@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Avatar Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="avatarCanvas" width="200" height="200"></canvas>
+        <br>
+        <button onclick="generateAvatar()">Generate New Avatar</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('avatarCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function generateRandomColor() {
+            return '#' + Math.floor(Math.random()*16777215).toString(16);
+        }
+
+        function drawCircle(x, y, radius, color) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        function drawEye(x, y, size) {
+            drawCircle(x, y, size, 'white');
+            drawCircle(x, y, size / 2, 'black');
+        }
+
+        function drawMouth(x, y, width, height) {
+            ctx.beginPath();
+            ctx.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+        }
+
+        function generateAvatar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background
+            ctx.fillStyle = generateRandomColor();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Face
+            const faceColor = generateRandomColor();
+            drawCircle(100, 100, 80, faceColor);
+
+            // Eyes
+            const eyeSize = Math.random() * 10 + 5;
+            drawEye(70, 80, eyeSize);
+            drawEye(130, 80, eyeSize);
+
+            // Mouth
+            const mouthWidth = Math.random() * 30 + 20;
+            const mouthHeight = Math.random() * 10 + 5;
+            drawMouth(100, 130, mouthWidth, mouthHeight);
+
+            // Hair
+            ctx.fillStyle = generateRandomColor();
+            ctx.beginPath();
+            ctx.moveTo(20, 100);
+            ctx.quadraticCurveTo(100, Math.random() * 50, 180, 100);
+            ctx.lineTo(180, 20);
+            ctx.lineTo(20, 20);
+            ctx.closePath();
+            ctx.fill();
+
+            // Accessories (e.g., hat)
+            if (Math.random() > 0.5) {
+                ctx.fillStyle = generateRandomColor();
+                ctx.beginPath();
+                ctx.moveTo(50, 60);
+                ctx.lineTo(150, 60);
+                ctx.lineTo(100, 20);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        // Generate initial avatar
+        generateAvatar();
+    </script>
+</body>
+</html>

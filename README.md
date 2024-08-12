@@ -1,6 +1,6 @@
 
 
-# 什么是urlapp    
+# 什么是urlapp     
 urlapp是一种轻量开源app封装形式。  
 它使用Data URL规范（参考：[Data URL 规范](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)），封装一个单页面html应用为一个url，使用浏览器访问url可直接使用app。
 

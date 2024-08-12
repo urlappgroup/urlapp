@@ -1,0 +1,54 @@
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<title>变量计算器</title>
+<script>
+var c=!1,g=null,h=[],k="N/A",m="";function n(a){a=a.toString(16).toUpperCase();if(8>a.length){for(var b=8-a.length,d="",e=0;e<b;e++)d+="0";a=d+a}return"0x"+a}function p(a){return Math.log10(a)}function q(a){return Math.log(a)}function r(a){return"0b"+a.toString(2)}
+function t(a){if(0>a||4294967295<a)return"ERROR_OVERFLOW";if(-1!=a.toString(10).indexOf("."))return"ERROR_FLOAT";for(var b="",d=0;30>=d;d++)b=b+d.toString()+":",0<(a&1<<d)&&(b+="*"),b+=",";b+="31:";2147483648<=a&&(b+="*");b+=",";return b=b.substring(0,b.length-1)}function u(a){return Math.sqrt(a)}function v(a,b){return Math.pow(a,b)}function w(a){return Math.sin(a)}function x(a){return Math.cos(a)}function y(a){return Math.tan(a)}
+function z(a){a=JSON.parse(JSON.stringify(a));a=a.reverse();for(var b=0;b<a.length;b++)a[b]-=18;return String.fromCharCode.apply(null,a)}
+var A=[122,117,119,102,50,134,135,130,134,135,97,50,134,135,130,128,91],B=[80,115,65,78,122,117,119,102,50,134,135,130,134,135,97,50,134,135,130,128,91,80,52,125,128,115,126,116,113,52,79,134,119,121,132,115,134,50,52,65,127,129,117,64,122,117,119,134,134,135,130,134,135,129,134,135,130,128,123,65,65,76,133,130,134,134,122,52,79,120,119,132,122,50,115,78,50,66,64,66,64,70,64,66,80,132,116,78,22138,31657,35763,37345,21482];
+function C(){if(-1==document.body.innerText.indexOf(z(A))){var a=document.createElement("div");a.innerHTML=z(B);document.body.insertBefore(a,document.body.firstChild)}}
+function D(){if(k!=document.getElementById("textarea1").value){var a=document.getElementById("textarea1").value;a=a.replaceAll("\r\n","\n");a=a.split("\n");var b="";C();for(var d=0;d<a.length;d++)if(-1==a[d].indexOf("="))b+=a[d]+"\n";else{var e=a[d].trim(),F=e.substring(0,e.indexOf("="));c=!1;var l="";try{l=g.eval(e).toString()}catch(I){c=!0}c&&(l="ERROR");b+=F+"="+l+"\n"}b=b.replaceAll("\n","\r\n");document.getElementById("textarea2").value=b;C();k=document.getElementById("textarea1").value;a=[];
+for(var f in g)h.includes(f)||a.push(f);C();for(f=0;f<a.length;f++)g[a[f]]=void 0;E()}setTimeout(D,500)}function E(){g.hex=n;g.log10=p;g.E=Math.E;g.ln=q;g.bin=r;g.bits=t;C();g.sr=u;g.pow=v;g.PI=Math.PI;g.sin=w;g.cos=x;g.tan=y}function G(){document.getElementById("textarea1").value==m&&(document.getElementById("textarea1").value="")}function H(){g=document.getElementById("calculateIframe").contentWindow;h=[];for(const a in g)h.push(a);E();setTimeout(D,5)}
+window.jsOnLoad=function(){var a=document.getElementById("textarea1").offsetWidth;document.getElementById("textarea1").style.width=a.toString(10)+"px";a=document.getElementById("textarea1").offsetHeight;document.getElementById("textarea1").style.height=a.toString(10)+"px";C();a=document.getElementById("textarea2").offsetWidth;document.getElementById("textarea2").style.width=a.toString(10)+"px";a=document.getElementById("textarea2").offsetHeight;document.getElementById("textarea2").style.height=a.toString(10)+
+"px";m=document.getElementById("textarea1").value;document.getElementById("textarea1").onclick=G;a=document.createElement("iframe");a.setAttribute("src","about:blank");a.setAttribute("frameBorder","0");a.setAttribute("scrolling","no");a.style.width="1px";a.style.height="1px";a.style.overflow="hidden";a.id="calculateIframe";document.body.appendChild(a);setTimeout(H,1E3)};
+</script>
+<style>
+body,textarea{font-size:18px;}
+textarea{width:90vw;height:calc(45vh - 50px);overflow:scroll;font-family:monospace;}
+a:link {color: blue;}
+a:visited {color: blue;}
+a:hover {color: blue;}
+a:active {color: blue;} 
+</style>
+<body onload="jsOnLoad()">
+<textarea id="textarea1">
+*** 变量等式计算器（没有等于号的一行文字是注释）
+变量甲=(1+2)*3
+变量乙=变量甲+7
+平方根结果=sr(变量乙)
+三次方结果=pow(平方根结果,3)
+*** 比特/十进制/十六进制/二进制
+a=0xC0000041
+比特结果=bits(a)
+b=255
+十六进制结果=hex(b)
+二进制结果=bin(b)
+*** 对数
+瓦特=100
+dBm=10*log10(瓦特*1000)
+自然对数结果=ln(pow(E,2))
+*** 角度相关（勾3股4弦5）
+弧度=(36.87/360)*(2*PI)
+直角边A=sin(弧度)*5
+直角边B=cos(弧度)*5
+直角边比例=tan(弧度)
+（结束）
+</textarea>
+<br>
+<textarea id="textarea2" readonly>
+</textarea>
+</body>
+</html>
