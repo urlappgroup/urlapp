@@ -721,19 +721,19 @@
         "weight": 1
     },
     {
-        "title": "程序员笑话100则",
-        "desc": "程序员笑话100则",
+        "title": "每日灵感生成器",
+        "desc": "每日灵感生成器",
         "tag": "微应用",
-        "marks": "逗你玩",
-        "fileName": "joke1.html",
+        "marks": "玩具",
+        "fileName": "dailyInspare.html",
         "appDocName": "",
         "userName": "urlappgroup",
         "userEmail": "urlappgroup@gmail.com",
         "version": "v1.0.0",
         "license": "Apache-2.0",
-        "appId": "app2024081300004",
-        "updateTime": 1723481254043,
-        "createTime": 1723481254043,
+        "appId": "app2024081400001",
+        "updateTime": 1723481254044,
+        "createTime": 1723481254044,
         "weight": 1
     }
 ]
