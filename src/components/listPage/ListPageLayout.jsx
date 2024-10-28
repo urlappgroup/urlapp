@@ -1,4 +1,3 @@
-
 import '@/App.css'
 import ListItem from './ListItem.jsx'
 import TabBar from './TabBar.jsx'
@@ -23,57 +22,39 @@ const ListPageLayout = () => {
   });
 
   function checkMatch(searchKey, item) {
-
     if (item.title.includes(searchKey) || item.desc.includes(searchKey)|| item.tag.includes(searchKey)|| item.marks.includes(searchKey)) {
       return true;
     }
     return false;
   }
+
   return (
     <>
-      <TabBar curTag={tag}  curMark={mark} />
+      <TabBar curTag={tag} curMark={mark} />
 
-      <div className="ua-main-content">
-
-        <div className="ua-content-list">
-
-
+      <main className="container mx-auto px-4 py-6">
+        <div className="max-w-4xl mx-auto divide-y divide-gray-200">
           {
             allList
               .filter(item => {
-     
-                if (appId) { //有id就只用id
+                if (appId) {
                   return item.appId == appId;
                 }
                 if (searchKey) {
                   return checkMatch(searchKey, item);
                 }
-                // console.log(item && item.tag == tag && item.marks == mark)
-                // console.log(item.tag, item.marks, tag, mark)
-
                 return item 
-                && (!tag || tag == 'all' ||item.tag == tag )
-                &&  (!mark || mark == 'all' ||item.marks == mark)
-
+                  && (!tag || tag == 'all' ||item.tag == tag )
+                  && (!mark || mark == 'all' ||item.marks == mark)
               })
-              .map((item) => {
-                // console.log("aa",item.tag, item.marks, tag, mark)
-
-                return <ListItem key={item.appId} itemData={item} />
-
-              }
-
-              )
-
+              .map((item) => (
+                <ListItem key={item.appId} itemData={item} />
+              ))
           }
-
         </div>
-
-      </div>
+      </main>
     </>
-
   )
 }
 
 export default ListPageLayout
-

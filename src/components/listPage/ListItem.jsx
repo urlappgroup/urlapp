@@ -1,4 +1,3 @@
-
 import '@/App.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -18,7 +17,7 @@ function formatDateTime(timestamp) {
   const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   return formattedDate;
 }
-const ListItem = ({ itemData,showType="list" }) => {
+const ListItem = ({ itemData, showType="list" }) => {
 
   if (!itemData) {
     itemData = {}
@@ -97,30 +96,109 @@ const ListItem = ({ itemData,showType="list" }) => {
   // console.log(appUrl)
 
   return (
-    <div className="ua-post-item"  >
+    <div className="p-4 border-b border-gray-200 hover:bg-gray-50">
+      <a 
+        className="text-xl font-semibold text-blue-600 hover:text-blue-800 cursor-pointer" 
+        onClick={() => openAppHtml()}
+      >
+        {itemData.title}
+      </a>
 
-      <a className="ua-post-title" onClick={() => openAppHtml()} >{itemData.title}</a>
+      <p 
+        className="mt-2 text-gray-600 line-clamp-2 cursor-pointer" 
+        title={itemData.desc} 
+        onClick={() => openAppHtml()}
+      >
+        {itemData.desc}
+      </p>
 
-      <p className="ua-post-summary" title={itemData.desc} onClick={() => openAppHtml()} >{itemData.desc}</p>
-
-      <div className="ua-post-metadata" title={"appId:" + itemData.appId}>
-        {itemData.userName}
-        &nbsp;· {formatDateTime(itemData.updateTime)}
-        &nbsp;· {itemData.tag} · {itemData.marks} · {itemData.license}
-        &nbsp;· <a className="ua-run-button" href="#" onClick={() => openAppHtml()} ><div className="ua-play-icon"></div>运行</a>
-        &nbsp;· <a href="#" onClick={() => copyDataUrlToClipboard()}>复制urlapp</a> 
-        &nbsp;· {itemData.appDocName && <a href="#" onClick={() => openAppDetailPage()} >使用说明</a>}
-        &nbsp;· <a href={appUrl} download={itemData.title}>下载</a>
-        &nbsp;· <a href="#" onClick={() => shareCurPage()} >分享</a>
-        {itemData.discussUrl && " · "}{itemData.discussUrl && <a href={itemData.discussUrl}  >讨论和反馈</a>}
-        &nbsp;· <a href={"https://github.com/urlappgroup/urlapp/discussions/categories/report-violation"}  >举报</a>
+      <div className="mt-3 text-sm text-gray-500 space-x-2" title={`appId:${itemData.appId}`}>
+        <span>{itemData.userName}</span>
+        <span>·</span>
+        <span>{formatDateTime(itemData.updateTime)}</span>
+        <span>·</span>
+        <span>{itemData.tag}</span>
+        <span>·</span>
+        <span>{itemData.marks}</span>
+        <span>·</span>
+        <span>{itemData.license}</span>
+        <span>·</span>
+        
+        <a 
+          className="text-white bg-blue-600 hover:bg-blue-700 inline-flex items-center gap-1 px-3 py-1 rounded-md transition-colors" 
+          href="#" 
+          onClick={() => openAppHtml()}
+        >
+          <div className="w-4 h-4">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          运行
+        </a>
+        
+        <span>·</span>
+        <a 
+          className="text-blue-600 hover:text-blue-800" 
+          href="#" 
+          onClick={() => copyDataUrlToClipboard()}
+        >
+          复制urlapp
+        </a>
+        
+        {itemData.appDocName && (
+          <>
+            <span>·</span>
+            <a 
+              className="text-blue-600 hover:text-blue-800" 
+              href="#" 
+              onClick={() => openAppDetailPage()}
+            >
+              使用说明
+            </a>
+          </>
+        )}
+        
+        <span>·</span>
+        <a 
+          className="text-blue-600 hover:text-blue-800" 
+          href={appUrl} 
+          download={itemData.title}
+        >
+          下载
+        </a>
+        
+        <span>·</span>
+        <a 
+          className="text-blue-600 hover:text-blue-800" 
+          href="#" 
+          onClick={() => shareCurPage()}
+        >
+          分享
+        </a>
+        
+        {itemData.discussUrl && (
+          <>
+            <span>·</span>
+            <a 
+              className="text-blue-600 hover:text-blue-800" 
+              href={itemData.discussUrl}
+            >
+              讨论和反馈
+            </a>
+          </>
+        )}
+        
+        <span>·</span>
+        <a 
+          className="text-blue-600 hover:text-blue-800" 
+          href="https://github.com/urlappgroup/urlapp/discussions/categories/report-violation"
+        >
+          举报
+        </a>
       </div>
-
-
     </div>
-
   )
 }
 
-
-export default ListItem 
+export default ListItem

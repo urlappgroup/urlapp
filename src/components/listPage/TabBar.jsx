@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -24,7 +23,7 @@ function sortByOrderList(stringList, orderList) {
     return stringList.slice().sort(compareFn);
 }
 
-const TabBar = ({ curTag,curMark }) => {
+const TabBar = ({ curTag, curMark }) => {
     curTag=curTag?curTag:"all"
     curMark=curMark?curMark:"all"
     const navigate = useNavigate();
@@ -40,46 +39,57 @@ const TabBar = ({ curTag,curMark }) => {
     let sortedMarks = sortByOrderList(newMarks, marksOrder)
 
     return (
-        <>
-            <ul className="ua-tabs">
-                <li key='all' className={'all' == curTag || !curTag ? 'active' : ''}
+        <div className="px-4 pt-2 pb-1 space-y-1">
+            <ul className="flex flex-wrap gap-1">
+                <li 
+                    key='all' 
+                    className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
+                        ${('all' == curTag || !curTag) 
+                            ? 'bg-blue-500 text-white' 
+                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
                     onClick={() => handleClick('/listPage?tag=all')}
                 >
                     全部
                 </li>
-                {
-                    sortedTags.map((tag) => (
-                        <li key={tag} className={tag == curTag ? 'active' : ''}
-                            onClick={() => handleClick('/listPage?tag=' + tag)}
-                        >
-                            {tag}
-                        </li>
-                    ))
-
-
-                }
+                {sortedTags.map((tag) => (
+                    <li 
+                        key={tag} 
+                        className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
+                            ${tag == curTag 
+                                ? 'bg-blue-500 text-white' 
+                                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleClick('/listPage?tag=' + tag)}
+                    >
+                        {tag}
+                    </li>
+                ))}
             </ul>
-            <ul className="ua-tabs">
-                <li key='all' className={'all' == curMark || !curMark ? 'active' : ''}
+
+            <ul className="flex flex-wrap gap-1">
+                <li 
+                    key='all' 
+                    className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
+                        ${('all' == curMark || !curMark) 
+                            ? 'bg-green-500 text-white' 
+                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
                     onClick={() => handleClick('/listPage?tag='+curTag+"&mark=")}
                 >
                     全部
                 </li>
-                {
-                    sortedMarks.map((mark) => (
-                        <li key={mark} className={mark == curMark ? 'active' : ''}
-                            onClick={() => handleClick('/listPage?tag=' + curTag+"&mark="+mark)}
-                        >
-                            {mark}
-                        </li>
-                    ))
-
-
-                }
+                {sortedMarks.map((mark) => (
+                    <li 
+                        key={mark} 
+                        className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
+                            ${mark == curMark 
+                                ? 'bg-green-500 text-white' 
+                                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleClick('/listPage?tag=' + curTag+"&mark="+mark)}
+                    >
+                        {mark}
+                    </li>
+                ))}
             </ul>
-
-        </>
-
+        </div>
     )
 }
 

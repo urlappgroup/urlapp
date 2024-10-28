@@ -21,9 +21,11 @@ export default function App() {
 
 function Layout() {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <Outlet />
+      <main className="flex-grow container mx-auto px-4  ">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );

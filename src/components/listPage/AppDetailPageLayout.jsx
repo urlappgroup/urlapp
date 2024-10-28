@@ -22,8 +22,8 @@ const AppDetailPageLayout = () => {
   return (
     <>
       <TabBar curTag={tag}  curMark={mark} />
-      <div className="ua-main-content">
-        <div className="ua-content-detail">
+      <main className="container mx-auto px-4 py-6">
+        <div className="max-w-4xl mx-auto">
           {
             item ? (
               <>
@@ -31,21 +31,20 @@ const AppDetailPageLayout = () => {
                 {item.appDocName && (
                   <iframe
                     sandbox
-                    className="item-doc"
                     src={docUrl}
                     title={item.title}
-                    style={{ width: '100%', height: 'calc(100vh - 200px)', border: 'none' }}
+                    className="w-full h-[calc(100vh-200px)] border-none mt-4"
                   />
                 )}
               </>
             ) : (
-              <div className="no-app-found">
-                <p>App 未找到</p>
+              <div className="text-center py-12">
+                <p className="text-gray-600 text-lg">App 未找到</p>
               </div>
             )
           }
         </div>
-      </div>
+      </main>
     </>
   )
 }
