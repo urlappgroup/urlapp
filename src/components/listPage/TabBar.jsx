@@ -24,8 +24,8 @@ function sortByOrderList(stringList, orderList) {
 }
 
 const TabBar = ({ curTag, curMark }) => {
-    curTag=curTag?curTag:"all"
-    curMark=curMark?curMark:"all"
+    curTag = curTag || "all";
+    curMark = curMark || "all";
     const navigate = useNavigate();
     const handleClick = (path) => {
         navigate(path);
@@ -39,62 +39,69 @@ const TabBar = ({ curTag, curMark }) => {
     let sortedMarks = sortByOrderList(newMarks, marksOrder)
 
     return (
-        <div className="px-4 pt-2 pb-1 space-y-1">
-            <ul className="flex flex-wrap gap-1">
-                <li 
-                    key='all' 
-                    className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
-                        ${('all' == curTag || !curTag) 
-                            ? 'bg-blue-500 text-white' 
-                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-                    onClick={() => handleClick('/listPage?tag=all')}
-                >
-                    全部
-                </li>
-                {sortedTags.map((tag) => (
-                    <li 
-                        key={tag} 
-                        className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
-                            ${tag == curTag 
-                                ? 'bg-blue-500 text-white' 
-                                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-                        onClick={() => handleClick('/listPage?tag=' + tag)}
+        <div className="">
+            <div className="container mx-auto px-4 py-2 space-y-2">
+                {/* Tags Section */}
+                <div className="flex flex-wrap gap-1">
+                    <button
+                        key="all"
+                        onClick={() => handleClick('/listPage?tag=all')}
+                        className={`px-2 py-1 text-sm rounded-lg transition-all duration-300
+                            ${('all' === curTag || !curTag)
+                                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md'
+                                : 'bg-white/80 hover:bg-white text-gray-600 hover:text-gray-800 hover:shadow-md'
+                            }`}
                     >
-                        {tag}
-                    </li>
-                ))}
-            </ul>
+                        全部分类
+                    </button>
+                    {sortedTags.map((tag) => (
+                        <button
+                            key={tag}
+                            onClick={() => handleClick('/listPage?tag=' + tag)}
+                            className={`px-2 py-1 text-sm rounded-lg transition-all duration-300
+                                ${tag === curTag
+                                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md'
+                                    : 'bg-white/80 hover:bg-white text-gray-600 hover:text-gray-800 hover:shadow-md'
+                                }`}
+                        >
+                            {tag}
+                        </button>
+                    ))}
+                </div>
 
-            <ul className="flex flex-wrap gap-1">
-                <li 
-                    key='all' 
-                    className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
-                        ${('all' == curMark || !curMark) 
-                            ? 'bg-green-500 text-white' 
-                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-                    onClick={() => handleClick('/listPage?tag='+curTag+"&mark=")}
-                >
-                    全部
-                </li>
-                {sortedMarks.map((mark) => (
-                    <li 
-                        key={mark} 
-                        className={`px-2 py-0.5 text-sm rounded-md cursor-pointer transition-colors
-                            ${mark == curMark 
-                                ? 'bg-green-500 text-white' 
+                {/* Marks Section */}
+                <div className="flex flex-wrap gap-1">
+                    <button
+                        key="all"
+                        onClick={() => handleClick('/listPage?tag='+curTag+"&mark=")}
+                        className={`px-2 py-1 text-sm rounded-lg transition-all duration-300
+                            ${('all' === curMark || !curMark)
+                                ? 'bg-green-500 text-white'
                                 : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-                        onClick={() => handleClick('/listPage?tag=' + curTag+"&mark="+mark)}
                     >
-                        {mark}
-                    </li>
-                ))}
-            </ul>
+                        全部标签
+                    </button>
+                    {sortedMarks.map((mark) => (
+                        <button
+                            key={mark}
+                            onClick={() => handleClick('/listPage?tag=' + curTag+"&mark="+mark)}
+                            className={`px-2 py-1 text-sm rounded-lg transition-all duration-300
+                                ${mark === curMark
+                                    ? 'bg-green-500 text-white'
+                                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                        >
+                            {mark}
+                        </button>
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }
 
 TabBar.propTypes = {
-    curTag: PropTypes.any.isRequired, // 这里可以根据实际需要调整验证规则
+    curTag: PropTypes.string,
+    curMark: PropTypes.string
 };
 
 export default TabBar
