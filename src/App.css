@@ -1,181 +1,39 @@
-.ua-header {
-  background-color: #f0f4f8;
-  color: #5d6470;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  /* border-bottom: 1px solid #dde1e8; */
-}
-#searchInput {
-  padding: 8px 12px; /* 内边距 */
-  border: 1px solid #ccc; /* 边框 */
-  border-radius: 4px; /* 圆角 */
-  font-size: 16px; /* 字体大小 */
-  width: 300px; /* 宽度 */
-}
-
-.ua-logo {
-  font-size: 1.5em;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  text-decoration: none;  
-  color: inherit; 
-}
-.ua-github {
-
-  display: flex;
-  align-items: center;
-  text-decoration: none; 
-  color: inherit; 
-}
-
-
-.ua-footer {
-  text-align: center;
-  padding: 15px 0;
-  color: #9da3ae;
-  font-size: 14px;
-  margin-top: 20px;
-  /* flex-grow: 1; */
-
-}
-
-.ua-main-content {
-  width: 60vw;
-  margin: 0px auto;
-  display: flex;
-  background: #ffffff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  flex: 1;
-}
-@media (max-width: 768px) {
-  .ua-main-content {
-    width: 100vw;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .ua-main-content {
-    max-width: 100vw;
-  }
-}
-
-.ua-content-list {
-  flex: 3;
-}
-.ua-content-detail {
-  width: 100%;
-}
-
-
-.ua-post-item {
-  border-top: 1px solid #e2e5ec;
-  /* border-bottom: 1px solid #e2e5ec; */
-  padding: 10px 20px 0 20px;
-  margin: 0;
-  transition: background-color 0.3s ease;
-}
- 
-.ua-post-item:hover {
-  background-color: #f7f9fb;
-}
-
-.ua-post-metadata {
-  font-size: 12px;
-  color: #9da3ae;
-  margin-bottom: 10px;
-}
-.ua-post-title {
-  color: #327ab7;
-  font-size: 18px;
-  margin: 5px 0;
-  text-decoration: none;
-  cursor: pointer;
-
-}
-
-.ua-post-summary {
-  font-size: 14px;
-  line-height: 1.6;
-  margin-top: 10px;
-  cursor: pointer;
-
-
-  white-space: pre-wrap; /* CSS属性，让换行和空白符号被浏览器保留 */
-  overflow: hidden; /* 当内容超出元素框时隐藏 */
-  text-overflow: ellipsis; /* 显示省略号...来表示被裁剪的文本 */
-  display: -webkit-box; /* 使用弹性盒子布局 */
-  -webkit-line-clamp: 3; /* 限制在一个块元素显示的文本的行数 */
-  -webkit-box-orient: vertical; /* 设置盒子的子元素排列方式 */
-  max-height: 4.5em; /* 设置p标签的最大高度；行数 * 每行的行高 */
-  line-height: 1.5em; /* 设置每行的行高 */
-
-}
-
-
-.ua-tabs {
-  list-style: none;
-  padding: 0;
-  /* margin: 0 0 20px; */
-  margin: 0 0 0 0;
-  display: flex;
-  background: #e6eaee;
-  /* border-radius: 8px; */
-  /* overflow: hidden; */
-
-  /* height: 50px;   */
-
-
-  /* justify-content: center; */
-  align-items: center;
-  overflow-x: auto; /* 允许在X轴方向滚动 */
-  scrollbar-width: none; /* 对于Firefox，隐藏滚动条 */
-  
-
-}
-.ua-tabs::-webkit-scrollbar { /* 对于Chrome, Safari 和 Opera 隐藏滚动条 */
+/* 特殊动画和滚动条样式 */
+.ua-tabs::-webkit-scrollbar {
   display: none;
 }
-.ua-tabs li {
-  padding: 5px 7px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  min-width: 50px; /* 设置容器的宽度，这里假设它是全屏宽 */
 
-  text-align: center; /* 使Tab内容居中 */
-  white-space: nowrap; /* 防止文本换行 */
+.ua-tabs {
+  scrollbar-width: none;
 }
 
-.ua-tabs li:hover,
-.ua-tabs li.active {
-  background: #d0d7df;
+/* 文本截断样式 */
+.ua-post-summary {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: 4.5em;
+  line-height: 1.5em;
 }
 
-.ua-run-button {
-  display: inline-flex;
-  padding: 5px 5px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.ua-run-button:hover {
-  background-color: #0056b3;
-}
+/* 播放图标 */
 .ua-play-icon {
   width: 0;
   height: 0;
-  border-left: 10px solid white; /* 白色三角形 */
+  border-left: 10px solid white;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
-  margin-right: 3px; /* 图标和文字之间的间距 */
+  margin-right: 3px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .ua-main-content {
+    @apply w-full;
+  }
 }
 
  
