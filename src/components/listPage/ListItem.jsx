@@ -109,7 +109,7 @@ const ListItem = ({ itemData, showType="list" }) => {
 
           {/* 描述部分 */}
           <p 
-            className="mt-2 text-sm text-gray-600 line-clamp-2 cursor-pointer group-hover:text-gray-800 transition-colors duration-300" 
+            className="mt-2 text-sm text-gray-600 ua-post-summary group-hover:text-gray-800 transition-colors duration-300" 
             title={itemData.desc} 
             onClick={() => openAppHtml()}
           >
