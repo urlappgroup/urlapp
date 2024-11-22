@@ -20,7 +20,7 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-white">快速链接</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/listPage?tag=文档" className="text-purple-200 hover:text-white transition duration-300">关于我们</a>
+                <a href="/detailPage?appId=doc2024072200001" className="text-purple-200 hover:text-white transition duration-300">关于我们</a>
               </li>
               <li>
                 <a href="/listPage?tag=文档" className="text-purple-200 hover:text-white transition duration-300">使用文档</a>
