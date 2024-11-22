@@ -45,7 +45,7 @@
         "appId": "app2024072200003",
         "updateTime": 1721649383000,
         "createTime": 1721649383000,
-        "weight": 1
+        "weight": 90
     },
     {
         "title": "[必读文档]关于urlapp和urlapp.org",
@@ -126,7 +126,7 @@
         "discussUrl": "https://github.com/urlappgroup/urlapp/discussions/3",
         "updateTime": 1721649383000,
         "createTime": 1721649383000,
-        "weight": 1
+        "weight": 80
     },
     {
         "title": "2048小游戏",
@@ -142,7 +142,7 @@
         "appId": "app2024072200006",
         "updateTime": 1721649383000,
         "createTime": 1721649383000,
-        "weight": 1
+        "weight": 90
     },
     {
         "title": "动态表单编辑json",
@@ -174,7 +174,7 @@
         "appId": "app2024072200008",
         "updateTime": 1721649383000,
         "createTime": 1721649383000,
-        "weight": 1
+        "weight": 80
     },
     {
         "title": "番茄计时器",
@@ -206,7 +206,7 @@
         "appId": "app2024072200010",
         "updateTime": 1721649383000,
         "createTime": 1721649383000,
-        "weight": 1
+        "weight": 70
     },
     {
         "title": "在线html编辑渲染",
@@ -478,7 +478,7 @@
         "appId": "app2024072500014",
         "updateTime": 1721908583000,
         "createTime": 1721908583000,
-        "weight": 1
+        "weight": 70
     },
     {
         "title": "支持分享的urlapp便签",
