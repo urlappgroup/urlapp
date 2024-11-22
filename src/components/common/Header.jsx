@@ -53,7 +53,7 @@ const Header = () => {
 
           {/* Navigation Section */}
           <nav className="flex items-center space-x-4">
-            <a href="/listPage?tag=文档" className="text-sm text-purple-200 hover:text-white transition duration-300">
+            <a href="/detailPage?appId=doc2024072200001" className="text-sm text-purple-200 hover:text-white transition duration-300">
               关于
             </a>
             <a href="/listPage?tag=文档" className="text-sm text-purple-200 hover:text-white transition duration-300">
