@@ -29,13 +29,13 @@ const ListItem = ({ itemData, showType="list" }) => {
   const openAppHtml =  () => {
     window.open(getAppHtmlPath(itemData), '_blank');
   };
-  const onItemCardClick =  () => {
-    if(showType=="detail"){
-      openAppHtml()
-    }else{
-      openAppDetailPage()
-    }
-  };
+  // const onItemCardClick =  () => {
+  //   if(showType=="detail"){
+  //     openAppHtml()
+  //   }else{
+  //     openAppDetailPage()
+  //   }
+  // };
   let navigate = useNavigate();
 
   const openAppDetailPage =  () => {
@@ -43,16 +43,15 @@ const ListItem = ({ itemData, showType="list" }) => {
   };
 
   const shareCurPage =  () => {
-   
-    const url = window.location.href;
+    const origin = window.location.origin;
+    const shareUrl = `${origin}/detailPage?appId=${itemData.appId}`;
 
-    navigator.clipboard.writeText(url).then(() => {
-      const promptMessage = `当前页面url已复制到剪贴板,也可以手动复制`;
-      prompt(promptMessage, url);
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      const promptMessage = `分享链接已复制到剪贴板,也可以手动复制`;
+      prompt(promptMessage, shareUrl);
     }).catch(err => {
       console.error('Failed to copy: ', err);
     });
-
   };
 
   function uint8ArrayToBase64(byteArray) {
